@@ -1,0 +1,52 @@
+#yogaclasses {
+  width: 70%;
+  /* Adjust as needed */
+  margin: 50px auto;
+  /* Center the div */
+}
+
+#yogaclasses h2 {
+  text-align: center;
+}
+
+.card {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.card iframe {
+  width: 100%;
+  height: 400px;
+}
+
+.card-body {
+  width: 100%;
+}
+
+.butt {
+  background-color: pink;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 18px;
+  cursor: pointer;
+  border-radius: 8%;
+  margin: 5%;
+}
+
+.butt:hover {
+  background-color: #ff69b4;
+}
+
+.butt>a {
+  color: white;
+  text-decoration: none;
+}
+
+#yogaclasses>h2 {
+  text-align: center;
+  font-size: 30px;
+  color: pink;
+  text-shadow: 1px 4px 2px rgba(0, 0, 0, 0.2);
+  margin-bottom: 5%;
+}

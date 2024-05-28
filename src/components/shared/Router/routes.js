@@ -1,5 +1,11 @@
 
-import { Home, Tests, Motivation, Sounds } from 'components/pages';
+import {
+  Yoga,
+  Home,
+  Tests,
+  Sounds,
+  Motivation,
+} from 'components/pages';
 
 const routeObjects = [
   {
@@ -18,8 +24,12 @@ const routeObjects = [
         element: <Motivation />,
       },
       {
-        path: 'Sounds',
+        path: 'sounds',
         element: <Sounds />
+      },
+      {
+        path: 'yoga',
+        element: <Yoga />
       }
     ]
   }

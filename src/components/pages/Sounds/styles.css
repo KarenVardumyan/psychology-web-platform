@@ -1,0 +1,84 @@
+#musics {
+  width: 80%;
+  /* Adjust as needed */
+  margin: 50px auto;
+  /* Center the div */
+}
+
+#musics h2 {
+  text-align: center;
+}
+
+.music-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-top: 20px;
+  background-color: pink;
+}
+
+.music {
+  width: calc(25% - 20px);
+  /* Adjust as needed */
+  margin-bottom: 20px;
+  background-color: #f8f9fa;
+  /* Light gray background color */
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  /* Soft shadow effect */
+  overflow: hidden;
+  /* Hide overflowing content */
+  margin: 3%;
+}
+
+.music img {
+  width: 100%;
+  height: auto;
+}
+
+.music-content {
+  padding: 10px;
+  text-align: center;
+}
+
+.music-title {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.music-artist {
+  font-size: 14px;
+  color: #6c757d;
+  /* Dark gray text color */
+}
+
+#musics>h2 {
+  text-align: center;
+  font-size: 30px;
+  color: pink;
+  text-shadow: 1px 4px 2px rgba(0, 0, 0, 0.2);
+  margin-bottom: 4%;
+}
+
+.butt {
+  background-color: pink;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 18px;
+  cursor: pointer;
+  border-radius: 8%;
+  margin: 4%;
+}
+
+.butt:hover {
+  background-color: #ff69b4;
+  border: #f8f9fa;
+  text-decoration: none;
+  color: white;
+}
+
+.butt>a {
+  color: white;
+  text-decoration: none;
+}

@@ -55,7 +55,7 @@ header {
   font-size: 13px;
   padding: 5px;
   padding-bottom: 5px;
-  width: 80px;
+  width: 120px;
   border-radius: 10px;
   cursor: pointer;
   transition: 100ms;
@@ -64,6 +64,10 @@ header {
 
 #submit-button:hover {
   background-color: #b48d8d;
+}
+
+#submit-button:focus {
+  outline: none;
 }
 
 #result-container {
@@ -99,4 +103,8 @@ header {
 
 #reset-button:hover {
   background-color: #b48d8d;
+}
+
+#reset-button:focus {
+  outline: none;
 }

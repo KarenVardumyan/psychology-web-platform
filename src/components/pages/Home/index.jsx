@@ -210,7 +210,7 @@ function Home() {
           <div id="threeServices">
             <h2 id="carayutyun">Մեր ծառայությունները</h2>
             <Link to='tests' target="_blank" className="service-button" >Հոգեբանական թեստեր</Link>
-            <a href="./motivacia.html" className="service-button">Մոտիվացիա</a>
+            <Link to='motivation' className="service-button" >Մոտիվացիա</Link>
             <a href="./chat/index.html" target="_blank" className="service-button">Չաթ հոգեբանի հետ</a>
 
           </div>

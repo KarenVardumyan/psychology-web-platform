@@ -1,5 +1,5 @@
 
-import { Home, Tests } from 'components/pages';
+import { Home, Tests, Motivation, Sounds } from 'components/pages';
 
 const routeObjects = [
   {
@@ -9,6 +9,19 @@ const routeObjects = [
   {
     path: 'tests',
     element: <Tests />
+  },
+  {
+    path: 'motivation',
+    children: [
+      {
+        index: true,
+        element: <Motivation />,
+      },
+      {
+        path: 'Sounds',
+        element: <Sounds />
+      }
+    ]
   }
 ]
 

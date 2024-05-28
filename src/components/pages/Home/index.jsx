@@ -16,6 +16,7 @@ import contactphoto from 'assets/img/contactphoto.jpg';
 import insta from 'assets/img/insta.jpg';
 import facebook from 'assets/img/facebook.jpg';
 import whatsapp from 'assets/img/whatsapp.jpg';
+import { Link } from 'react-router-dom';
 
 function Home() {
   return (
@@ -208,7 +209,7 @@ function Home() {
 
           <div id="threeServices">
             <h2 id="carayutyun">Մեր ծառայությունները</h2>
-            <a href="./test/index.html" target="_blank" className="service-button">Հոգեբանական թեստեր</a>
+            <Link to='tests' target="_blank" className="service-button" >Հոգեբանական թեստեր</Link>
             <a href="./motivacia.html" className="service-button">Մոտիվացիա</a>
             <a href="./chat/index.html" target="_blank" className="service-button">Չաթ հոգեբանի հետ</a>
 

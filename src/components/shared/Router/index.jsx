@@ -1,14 +1,14 @@
-import { Routes } from 'react-router-dom';
-
-import routeObjects from './routes';
-import RenderRoutes from './RenderRoutes';
+import { Routes, Route } from 'react-router-dom';
+import routeObjects from './routes'
 
 function Router() {
   return (
-    <Routes>{RenderRoutes(routeObjects)}</Routes>
+    <Routes>
+      {routeObjects.map((route, index) => (
+        <Route key={index} path={route.path} element={route.element} />
+      ))}
+    </Routes>
   );
 }
-
-export { routeObjects };
 
 export default Router;

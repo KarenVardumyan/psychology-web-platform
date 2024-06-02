@@ -5,39 +5,63 @@ import {
   Tests,
   Sounds,
   Motivation,
+  SignIn,
+  SignUp,
+  Chat,
 } from 'components/pages';
 import { Navigate } from 'react-router-dom';
+import PrivateRoute from './PrivateRoute';
 
 const routeObjects = [
   {
-    index: true,
-    element: <Navigate to='home' />
+    path: '/signin',
+    element: <SignIn />,
+  },
+  {
+    path: '/signup',
+    element: <SignUp />,
+  },
+  {
+    path: '*',
+    element: <>Not Found!! 404</>,
+    isPrivateRoute: true
   },
   {
     path: 'home',
-    element: <Home />,
+    element: <PrivateRoute><Home /></PrivateRoute>,
+    isPrivateRoute: true
   },
   {
     path: 'tests',
-    element: <Tests />
+    element: <PrivateRoute><Tests /></PrivateRoute>,
+    isPrivateRoute: true
   },
   {
-    path: 'motivation',
-    children: [
-      {
-        index: true,
-        element: <Motivation />,
-      },
-      {
-        path: 'sounds',
-        element: <Sounds />
-      },
-      {
-        path: 'yoga',
-        element: <Yoga />
-      }
-    ]
-  }
+    path: 'chat/:uid',
+    element: <PrivateRoute><Chat /></PrivateRoute>,
+    isPrivateRoute: true
+  },
+  // {
+  //   path: 'motivation',
+  //   isPrivateRoute: true,
+  //   children: [
+  //     {
+  //       index: true,
+  //       element: <Motivation />,
+  //       isPrivateRoute: true
+  //     },
+  //     {
+  //       path: 'sounds',
+  //       element: <Sounds />,
+  //       isPrivateRoute: true
+  //     },
+  //     {
+  //       path: 'yoga',
+  //       element: <Yoga />,
+  //       isPrivateRoute: true
+  //     }
+  //   ]
+  // }
 ]
 
 export default routeObjects;

@@ -1,4 +1,4 @@
-#nkarner {
+#pictures {
   width: 48%; /* Adjust as needed */
   margin: 50px auto; /* Center the div */
 }
@@ -6,7 +6,8 @@
   width: 35%; /* Set image width */
   /* margin: auto;  */
 }
-#nkarner>h2{
+
+#pictures>h2{
   text-align: center;
   font-size: 30px;
   color: pink;

@@ -14,7 +14,7 @@ import mot9 from 'assets/img/mot9.jpg';
 function Pictures() {
 
   return (
-    <div id="nkarner" className="carousel slide" data-ride="carousel">
+    <div id="pictures" className="carousel slide" data-ride="carousel">
       <h2>Նկարներ</h2>
       <div className="carousel-inner">
         {/* Image 1 */}

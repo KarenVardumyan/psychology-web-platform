@@ -44,7 +44,7 @@ const routeObjects = [
     isPrivateRoute: true
   },
   {
-    path: 'chat/:uid',
+    path: 'chat',
     element: <PrivateRoute><Chat /></PrivateRoute>,
     isPrivateRoute: true
   },

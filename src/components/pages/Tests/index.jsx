@@ -35,7 +35,7 @@ function Test() {
     setResultTitle('');
     formik.resetForm();
   }
-  console.log('//////////////          ', formik.values)
+
   return (
     <form onSubmit={formik.handleSubmit} autoComplete="off" noValidate>
       <header className="header">

@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import { auth } from "config/firebase";
+import { doc, setDoc } from "firebase/firestore"; 
+import { auth, db } from "config/firebase";
 import { createUserDocumentFromAuth } from 'api/auth'
 
 const useSignUp = () => {
@@ -16,11 +17,6 @@ const useSignUp = () => {
   //   surname
   // });
 
-  console.log('**************       user data', {
-    role,
-    displayName: name,
-    surname
-  });
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -40,6 +36,7 @@ const useSignUp = () => {
         displayName: name,
         surname
       })
+      await setDoc(doc(db, "userChats", res.user.uid), {});
       navigate("/home");
     } catch (err) {
       setError(err.message);

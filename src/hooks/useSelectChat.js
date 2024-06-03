@@ -8,29 +8,13 @@ import {
 } from "firebase/firestore";
 import { db } from "config/firebase";
 import useAuth from "hooks/useAuth";
-import { getUserData } from 'api/auth';
 
-const useSelectChat = (uid) => {
-  const [username, setUsername] = useState("");
-  const [user, setUser] = useState(null);
+const useSelectChat = () => {
   const [err, setErr] = useState(false);
-
-  const getUser = async () => {
-    try {
-      const userData = await getUserData(uid);
-      console.log(userData)
-      setUser(userData);
-    } catch (err) {
-      setErr(true);
-    }
-  };
-  useEffect(() => {
-    getUser()
-  }, [])
 
   const { user: currentUser } = useAuth();
 
-  const handleSelect = async () => {
+  const handleSelect = async (user) => {
     //check whether the group(chats in firestore) exists, if not create
     const combinedId =
       currentUser.uid > user.uid
@@ -63,21 +47,12 @@ const useSelectChat = (uid) => {
         });
       }
     } catch (err) { }
-
-    setUsername("")
   };
 
-  useEffect(() => {
-    console.log(user)
-    if (user) {
-      handleSelect()
-    }
-  }, [user])
-
   return {
-    user,
-    username,
     err,
+    currentUser,
+    handleSelect,
   };
 };
 

@@ -17,7 +17,6 @@ import insta from 'assets/img/insta.jpg';
 import facebook from 'assets/img/facebook.jpg';
 import whatsapp from 'assets/img/whatsapp.jpg';
 import { Link } from 'react-router-dom';
-import usePhysiologistsList from 'hooks/usePhysiologistsList';
 import { ReactComponent as LogOut } from 'assets/svg/logout.svg';
 import { auth } from "config/firebase";
 // import LogOut from 'assets/svg/logout.svg';
@@ -29,8 +28,6 @@ const handleSignOut = () => {
 }
 
 function Home() {
-  const { physiologists } = usePhysiologistsList()
-
   return (
     <body>
 
@@ -226,7 +223,7 @@ function Home() {
             <h2 id="carayutyun">Մեր ծառայությունները</h2>
             <Link to='/tests' target="_blank" className="service-button" >Հոգեբանական թեստեր</Link>
             <Link to='/motivation' className="service-button" >Մոտիվացիա</Link>
-            <a href={`./chat/${physiologists[0]?.uid}`} target="_blank" className="service-button">Չաթ հոգեբանի հետ</a>
+            <a href="./chat/" target="_blank" className="service-button">Չաթ հոգեբանի հետ</a>
 
           </div>
         </div>

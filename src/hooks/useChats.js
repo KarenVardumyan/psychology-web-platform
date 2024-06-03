@@ -22,7 +22,7 @@ const useChats = () => {
     };
 
     user?.uid && getChats();
-  }, [currentUser?.uid]);
+  }, [user?.uid]);
 
   const handleSelectChat = (u) => {
     dispatch({ type: "CHANGE_USER", payload: u });

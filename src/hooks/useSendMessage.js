@@ -45,7 +45,7 @@ const useSendMessage = () => {
         }
       );
     } else {
-      await updateDoc(doc(db, "chats", 'RttrufoHGZXvfUnNllpWTBsG2Yl2IfjKVqIbvYUW2zJv8EsHlyOOAKL2'), {
+      await updateDoc(doc(db, "chats", data.chatId), {
         messages: arrayUnion({
           id: uuid(),
           text,

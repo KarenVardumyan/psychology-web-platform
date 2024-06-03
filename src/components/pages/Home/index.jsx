@@ -18,6 +18,15 @@ import facebook from 'assets/img/facebook.jpg';
 import whatsapp from 'assets/img/whatsapp.jpg';
 import { Link } from 'react-router-dom';
 import usePhysiologistsList from 'hooks/usePhysiologistsList';
+import { ReactComponent as LogOut } from 'assets/svg/logout.svg';
+import { auth } from "config/firebase";
+// import LogOut from 'assets/svg/logout.svg';
+
+const handleSignOut = () => {
+  auth
+  .signOut()
+  .then(() => console.log('User signed out!'));
+}
 
 function Home() {
   const { physiologists } = usePhysiologistsList()
@@ -43,6 +52,9 @@ function Home() {
             <img src={facebook} alt="Facebook Logo"></img>
             <img src={whatsapp} alt="WhatsApp Logo"></img>
           </div>
+          <div className="logout-icon" >
+            <LogOut fill="red" onClick={handleSignOut}/>
+          </div>
         </div>
       </header>
 
@@ -53,7 +65,7 @@ function Home() {
 
         <nav >
           <ul className="nav-linkss"  >
-            <li><a href="#" style={{ color: 'black' }}>Գլխավոր</a></li>
+            <li className="nav-links-item"><a href="#" style={{ color: 'black' }}>Գլխավոր</a></li>
             <li><a href="#masin" style={{ color: 'black' }}>Մեր մասին</a></li>
             <li><a href="#kap" style={{ color: 'black' }}>Կապ</a></li>
             <li><a href="#carayutyun" style={{ color: 'black' }}>Մեր ծառայությունները</a></li>
@@ -82,7 +94,7 @@ function Home() {
             <div className="about-content">
               <h2 id="masin" style={{ paddingBottom: '5%' }}>Մեր մասին</h2>
               <p>Բարի գալուստ CalmMind, որտեղ սկսվում է ներքին խաղաղության և անձնական աճի ուղին ...</p>
-              <button> <a href="./index1.html" style={{ fontSize: '3vh' }}>Իմանալ ավելին</a></button>
+              <button className="about-content-see-more"> <a href="./index1.html" style={{ fontSize: '3vh' }}>Իմանալ ավելին</a></button>
             </div>
           </div>
 

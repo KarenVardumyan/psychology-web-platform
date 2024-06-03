@@ -41,12 +41,26 @@ header {
 }
 
 .radio-btn {
-  margin-top: 10px;
+  height: 20px;
+  width: 20px;
+}
+
+input[type="radio"] {
+  margin-top: 0;
+  margin-right: 10px;
+}
+
+.question-answer-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 5px 0;
 }
 
 .radio-label {
   cursor: pointer;
   color: rgb(48, 47, 47);
+  margin: 0;
 }
 
 #submit-button {
@@ -78,9 +92,9 @@ header {
   border-radius: 20px;
   margin-top: 50px;
   font-size: 18px;
-  -webkit-box-shadow: 10px 10px 5px -5px rgba(0,0,0,0.38);
-  -moz-box-shadow: 10px 10px 5px -5px rgba(0,0,0,0.38);
-  box-shadow: 10px 10px 5px -5px rgba(0,0,0,0.38);
+  -webkit-box-shadow: 10px 10px 5px -5px rgba(0, 0, 0, 0.38);
+  -moz-box-shadow: 10px 10px 5px -5px rgba(0, 0, 0, 0.38);
+  box-shadow: 10px 10px 5px -5px rgba(0, 0, 0, 0.38);
 }
 
 #result-title {
@@ -99,6 +113,7 @@ header {
   cursor: pointer;
   transition: 100ms;
   background-color: #e2afaf;
+  width: inherit;
 }
 
 #reset-button:hover {

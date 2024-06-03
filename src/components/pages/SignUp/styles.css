@@ -1,0 +1,33 @@
+.sign-up-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.sign-up-form {
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  align-items: center;
+  height: 300px;
+  justify-content: space-evenly;
+}
+
+.sign-up-submit-button {
+  width: 350px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-roles-select {
+  width: 350px;
+  height: 30px;
+}
+
+.user-roles-select-label {
+  width: 350px;
+}

@@ -35,7 +35,7 @@ function Test() {
     setResultTitle('');
     formik.resetForm();
   }
-
+  console.log('//////////////          ', formik.values)
   return (
     <form onSubmit={formik.handleSubmit} autoComplete="off" noValidate>
       <header className="header">
@@ -48,12 +48,18 @@ function Test() {
             1. Ձեր կարծիքով ինչպիսին են արդյոք նրանք, ովքեր հետևում են քաղաքավարության կանոններին։
           </h3>
           <div className="questions">
-            <input onBlur={formik.handleBlur} onChange={formik.handleChange} className="radio-btn" type="radio" id="1-1" name="q-1" value="2" />
-            <label className="radio-label" htmlFor="1-1">Բարեհամբույր են, շփման ընթացքում հաճելի</label><br />
-            <input onBlur={formik.handleBlur} onChange={formik.handleChange} className="radio-btn" type="radio" id="1-2" name="q-1" value="4" />
-            <label className="radio-label" htmlFor="1-2">Խիստ դաստիարակված</label><br />
-            <input onBlur={formik.handleBlur} onChange={formik.handleChange} className="radio-btn" type="radio" id="1-3" name="q-1" value="1" />
-            <label className="radio-label" htmlFor="1-3">Ուղղակի թաքցնում են իրենց իրական բնավորությունը</label><br />
+            <div className="question-answer-container">
+              <input onBlur={formik.handleBlur} onChange={formik.handleChange} className="radio-btn" type="radio" id="1-1" name="q-1" value="2" checked={formik?.values['q-1'] === '2'}/>
+              <label className="radio-label" htmlFor="1-1">Բարեհամբույր են, շփման ընթացքում հաճելի</label><br />
+            </div>
+            <div className="question-answer-container">
+              <input onBlur={formik.handleBlur} onChange={formik.handleChange} className="radio-btn" type="radio" id="1-2" name="q-1" value="4" checked={formik?.values['q-1'] === '4'}/>
+              <label className="radio-label" htmlFor="1-2">Խիստ դաստիարակված</label><br />
+            </div>
+            <div className="question-answer-container">
+              <input onBlur={formik.handleBlur} onChange={formik.handleChange} className="radio-btn" type="radio" id="1-3" name="q-1" value="1" checked={formik?.values['q-1'] === '1'}/>
+              <label className="radio-label" htmlFor="1-3">Ուղղակի թաքցնում են իրենց իրական բնավորությունը</label><br />
+            </div>
             <br></br>
           </div>
         </div>
@@ -63,12 +69,18 @@ function Test() {
             2. Դուք գիտեք որևէ ընտանեկան զույգի, որը երբեք չի վիճում: Ձեր կարծիքով
           </h3>
           <div className="questions">
-            <input onBlur={formik.handleBlur} onChange={formik.handleChange} className="radio-btn" type="radio" id="2-1" name="q-2" value="2" />
-            <label className="radio-label" htmlFor="2-1">Նրանք երջանիկ են</label><br />
-            <input onBlur={formik.handleBlur} onChange={formik.handleChange} className="radio-btn" type="radio" id="2-2" name="q-2" value="1" />
-            <label className="radio-label" htmlFor="2-2">Նրանք անտարբեր են միմյանց նկատմամբ</label><br />
-            <input onBlur={formik.handleBlur} onChange={formik.handleChange} className="radio-btn" type="radio" id="2-3" name="q-2" value="4" />
-            <label className="radio-label" htmlFor="2-3">Նրանք չունեն վստահություն միմյանց նկատմամբ</label><br />
+            <div className="question-answer-container">
+              <input onBlur={formik.handleBlur} onChange={formik.handleChange} className="radio-btn" type="radio" id="2-1" name="q-2" value="2" checked={formik?.values['q-2'] === '2'}/>
+              <label className="radio-label" htmlFor="2-1">Նրանք երջանիկ են</label><br />
+            </div>
+            <div className="question-answer-container">
+              <input onBlur={formik.handleBlur} onChange={formik.handleChange} className="radio-btn" type="radio" id="2-2" name="q-2" value="1" checked={formik?.values['q-2'] === '1'}/>
+              <label className="radio-label" htmlFor="2-2">Նրանք անտարբեր են միմյանց նկատմամբ</label><br />
+            </div>
+            <div className="question-answer-container">
+              <input onBlur={formik.handleBlur} onChange={formik.handleChange} className="radio-btn" type="radio" id="2-3" name="q-2" value="4" checked={formik?.values['q-2'] === '4'}/>
+              <label className="radio-label" htmlFor="2-3">Նրանք չունեն վստահություն միմյանց նկատմամբ</label><br />
+            </div>
             <br></br>
           </div>
         </div>
@@ -78,12 +90,18 @@ function Test() {
             3. Դուք առաջին անգամ տեսնում եք մի մարդու, որը սկսում է պատմել Ձեզ անեկդոտներ, դուք մտածում եք, որ նա
           </h3>
           <div className="questions">
-            <input onBlur={formik.handleBlur} onChange={formik.handleChange} className="radio-btn" type="radio" id="3-1" name="q-3" value="1" />
-            <label className="radio-label" htmlFor="3-1">Սրամիտ է</label><br />
-            <input onBlur={formik.handleBlur} onChange={formik.handleChange} className="radio-btn" type="radio" id="3-2" name="q-3" value="2" />
-            <label className="radio-label" htmlFor="3-2">Իրեն անվստահ է զգում և փորձում է դուրս գալ անհարմար իրավիճակից</label><br />
-            <input onBlur={formik.handleBlur} onChange={formik.handleChange} className="radio-btn" type="radio" id="3-3" name="q-3" value="4" />
-            <label className="radio-label" htmlFor="3-3">ՈՒզում է թողնել հաճելի տպավորություն</label><br />
+            <div className="question-answer-container">
+              <input onBlur={formik.handleBlur} onChange={formik.handleChange} className="radio-btn" type="radio" id="3-1" name="q-3" value="1" checked={formik?.values['q-3'] === '1'}/>
+              <label className="radio-label" htmlFor="3-1">Սրամիտ է</label><br />
+            </div>
+            <div className="question-answer-container">
+              <input onBlur={formik.handleBlur} onChange={formik.handleChange} className="radio-btn" type="radio" id="3-2" name="q-3" value="2" checked={formik?.values['q-3'] === '2'}/>
+              <label className="radio-label" htmlFor="3-2">Իրեն անվստահ է զգում և փորձում է դուրս գալ անհարմար իրավիճակից</label><br />
+            </div>
+            <div className="question-answer-container">
+              <input onBlur={formik.handleBlur} onChange={formik.handleChange} className="radio-btn" type="radio" id="3-3" name="q-3" value="4" checked={formik?.values['q-3'] === '4'}/>
+              <label className="radio-label" htmlFor="3-3">ՈՒզում է թողնել հաճելի տպավորություն</label><br />
+            </div>
             <br></br>
           </div>
         </div>
@@ -93,10 +111,14 @@ function Test() {
             4. Դուք ինչ-որ մեկի հետ խոսում եք շատ հետաքրքիր թեմայի վերաբերյալ և ձեր զրուցակիցը վարում է այն ժեստերի օգնությամբ, դուք համարում եք, որ
           </h3>
           <div className="questions">
-            <input onBlur={formik.handleBlur} onChange={formik.handleChange} className="radio-btn" type="radio" id="4-1" name="q-4" value="4" />
-            <label className="radio-label" htmlFor="4-1">Անհանգստանում է</label><br />
-            <input onBlur={formik.handleBlur} onChange={formik.handleChange} className="radio-btn" type="radio" id="4-2" name="q-4" value="1" />
-            <label className="radio-label" htmlFor="4-2">Անկեղծ չէ</label><br />
+            <div className="question-answer-container">
+              <input onBlur={formik.handleBlur} onChange={formik.handleChange} className="radio-btn" type="radio" id="4-1" name="q-4" value="4" checked={formik?.values['q-4'] === '4'}/>
+              <label className="radio-label" htmlFor="4-1">Անհանգստանում է</label><br />
+            </div>
+            <div className="question-answer-container">
+              <input onBlur={formik.handleBlur} onChange={formik.handleChange} className="radio-btn" type="radio" id="4-2" name="q-4" value="1" checked={formik?.values['q-4'] === '1'}/>
+              <label className="radio-label" htmlFor="4-2">Անկեղծ չէ</label><br />
+            </div>
             <br></br>
           </div>
         </div>
@@ -106,10 +128,14 @@ function Test() {
             5. Դուք որոշել եք ձեր հաճախորդներին ավելի լավ ճանաչել գտնում եք, որ պետք է.
           </h3>
           <div className="questions">
-            <input onBlur={formik.handleBlur} onChange={formik.handleChange} className="radio-btn" type="radio" id="5-1" name="q-5" value="1" />
-            <label className="radio-label" htmlFor="5-1">Հրավիրել նրանց որևէ տեղ</label><br />
-            <input onBlur={formik.handleBlur} onChange={formik.handleChange} className="radio-btn" type="radio" id="5-2" name="q-5" value="2" />
-            <label className="radio-label" htmlFor="5-2">Հետևել նրանց աշխատանքում</label><br />
+            <div className="question-answer-container">
+              <input onBlur={formik.handleBlur} onChange={formik.handleChange} className="radio-btn" type="radio" id="5-1" name="q-5" value="1" checked={formik?.values['q-5'] === '1'}/>
+              <label className="radio-label" htmlFor="5-1">Հրավիրել նրանց որևէ տեղ</label><br />
+            </div>
+            <div className="question-answer-container">
+              <input onBlur={formik.handleBlur} onChange={formik.handleChange} className="radio-btn" type="radio" id="5-2" name="q-5" value="2" checked={formik?.values['q-5'] === '2'}/>
+              <label className="radio-label" htmlFor="5-2">Հետևել նրանց աշխատանքում</label><br />
+            </div>
             <br></br>
           </div>
         </div>
@@ -119,12 +145,18 @@ function Test() {
             6. Ինչ-որ մեկը ռեստորանում տալիս է շատ մեծ լրավճար: Դուք վստահ եք, որ
           </h3>
           <div className="questions">
-            <input onBlur={formik.handleBlur} onChange={formik.handleChange} className="radio-btn" type="radio" id="6-1" name="q-6" value="4" />
-            <label className="radio-label" htmlFor="6-1">Նա ուզում է զարմացնել մյուսներին</label><br />
-            <input onBlur={formik.handleBlur} onChange={formik.handleChange} className="radio-btn" type="radio" id="6-2" name="q-6" value="2" />
-            <label className="radio-label" htmlFor="6-2">Նա ակնկալում է մատուցողի բարյացակամ վերաբերմունքը</label><br />
-            <input onBlur={formik.handleBlur} onChange={formik.handleChange} className="radio-btn" type="radio" id="6-3" name="q-6" value="1" />
-            <label className="radio-label" htmlFor="6-3">Նա մեծահոգի անձնավորություն է</label><br />
+            <div className="question-answer-container">
+              <input onBlur={formik.handleBlur} onChange={formik.handleChange} className="radio-btn" type="radio" id="6-1" name="q-6" value="4" checked={formik?.values['q-6'] === '4'}/>
+              <label className="radio-label" htmlFor="6-1">Նա ուզում է զարմացնել մյուսներին</label><br />
+            </div>
+            <div className="question-answer-container">
+              <input onBlur={formik.handleBlur} onChange={formik.handleChange} className="radio-btn" type="radio" id="6-2" name="q-6" value="2" checked={formik?.values['q-6'] === '2'}/>
+              <label className="radio-label" htmlFor="6-2">Նա ակնկալում է մատուցողի բարյացակամ վերաբերմունքը</label><br />
+            </div>
+            <div className="question-answer-container">
+              <input onBlur={formik.handleBlur} onChange={formik.handleChange} className="radio-btn" type="radio" id="6-3" name="q-6" value="1" checked={formik?.values['q-6'] === '1'}/>
+              <label className="radio-label" htmlFor="6-3">Նա մեծահոգի անձնավորություն է</label><br />
+            </div>
             <br></br>
           </div>
         </div>
@@ -134,12 +166,18 @@ function Test() {
             7. Եթե որևէ մեկը չի սիրում խոսակցությունն առաջինը սկսել ապա դուք գտնում եք, որ նա
           </h3>
           <div className="questions">
-            <input onBlur={formik.handleBlur} onChange={formik.handleChange} className="radio-btn" type="radio" id="7֊1" name="q-7" value="2" />
-            <label className="radio-label" htmlFor="7֊1">Ինչ-որ բան թաքցնում է և չի ուզում խոսել</label><br />
-            <input onBlur={formik.handleBlur} onChange={formik.handleChange} className="radio-btn" type="radio" id="7֊2" name="q-7" value="4" />
-            <label className="radio-label" htmlFor="7֊2">Շատ երկչոտ է</label><br />
-            <input onBlur={formik.handleBlur} onChange={formik.handleChange} className="radio-btn" type="radio" id="7֊3" name="q-7" value="1" />
-            <label className="radio-label" htmlFor="7֊3">Վախենում է, որ իրեն չհասկանան</label><br />
+            <div className="question-answer-container">
+              <input onBlur={formik.handleBlur} onChange={formik.handleChange} className="radio-btn" type="radio" id="7֊1" name="q-7" value="2" checked={formik?.values['q-7'] === '2'}/>
+              <label className="radio-label" htmlFor="7֊1">Ինչ-որ բան թաքցնում է և չի ուզում խոսել</label><br />
+            </div>
+            <div className="question-answer-container">
+              <input onBlur={formik.handleBlur} onChange={formik.handleChange} className="radio-btn" type="radio" id="7֊2" name="q-7" value="4" checked={formik?.values['q-7'] === '4'}/>
+              <label className="radio-label" htmlFor="7֊2">Շատ երկչոտ է</label><br />
+            </div>
+            <div className="question-answer-container">
+              <input onBlur={formik.handleBlur} onChange={formik.handleChange} className="radio-btn" type="radio" id="7֊3" name="q-7" value="1" checked={formik?.values['q-7'] === '1'}/>
+              <label className="radio-label" htmlFor="7֊3">Վախենում է, որ իրեն չհասկանան</label><br />
+            </div>
             <br></br>
           </div>
         </div>
@@ -149,12 +187,18 @@ function Test() {
             8. Արդյոք գտնում եք, որ նեղ ճակատը նշանակում է.
           </h3>
           <div className="questions">
-            <input onBlur={formik.handleBlur} onChange={formik.handleChange} className="radio-btn" type="radio" id="8֊1" name="q-8" value="1" />
+          <div className="question-answer-container">
+            <input onBlur={formik.handleBlur} onChange={formik.handleChange} className="radio-btn" type="radio" id="8֊1" name="q-8" value="1" checked={formik?.values['q-8'] === '1'}/>
             <label className="radio-label" htmlFor="8֊1">Անընդունակություն</label><br />
-            <input onBlur={formik.handleBlur} onChange={formik.handleChange} className="radio-btn" type="radio" id="8֊2" name="q-8" value="2" />
+          </div>
+          <div className="question-answer-container">
+            <input onBlur={formik.handleBlur} onChange={formik.handleChange} className="radio-btn" type="radio" id="8֊2" name="q-8" value="2" checked={formik?.values['q-8'] === '2'}/>
             <label className="radio-label" htmlFor="8֊2">Համառություն</label><br />
-            <input onBlur={formik.handleBlur} onChange={formik.handleChange} className="radio-btn" type="radio" id="8֊3" name="q-8" value="4" />
+          </div>
+          <div className="question-answer-container">
+            <input onBlur={formik.handleBlur} onChange={formik.handleChange} className="radio-btn" type="radio" id="8֊3" name="q-8" value="4" checked={formik?.values['q-8'] === '4'}/>
             <label className="radio-label" htmlFor="8֊3">Հստակորեն ոչինչ չեք կարող ասել</label><br />
+          </div>
             <br></br>
           </div>
         </div>
@@ -164,12 +208,18 @@ function Test() {
             9. Այն մարդը, որը չի նայում ձեր աչքերին, ձեր կարծիքով.
           </h3>
           <div className="questions">
-            <input onBlur={formik.handleBlur} onChange={formik.handleChange} className="radio-btn" type="radio" id="9֊1" name="q-9" value="1" />
+          <div className="question-answer-container">
+            <input onBlur={formik.handleBlur} onChange={formik.handleChange} className="radio-btn" type="radio" id="9֊1" name="q-9" value="1" checked={formik?.values['q-9'] === '1'}/>
             <label className="radio-label" htmlFor="9֊1">Տառապում է թերարժեքության բարդույթով</label><br />
-            <input onBlur={formik.handleBlur} onChange={formik.handleChange} className="radio-btn" type="radio" id="9֊2" name="q-9" value="4" />
+          </div>
+          <div className="question-answer-container">
+            <input onBlur={formik.handleBlur} onChange={formik.handleChange} className="radio-btn" type="radio" id="9֊2" name="q-9" value="4" checked={formik?.values['q-9'] === '4'}/>
             <label className="radio-label" htmlFor="9֊2">Անկեղծ չէ</label><br />
-            <input onBlur={formik.handleBlur} onChange={formik.handleChange} className="radio-btn" type="radio" id="9֊3" name="q-9" value="2" />
+          </div>
+          <div className="question-answer-container">
+            <input onBlur={formik.handleBlur} onChange={formik.handleChange} className="radio-btn" type="radio" id="9֊3" name="q-9" value="2" checked={formik?.values['q-9'] === '2'}/>
             <label className="radio-label" htmlFor="9֊3">Չափազանց թափթփված է</label><br />
+          </div>
             <br></br>
           </div>
         </div>
@@ -180,12 +230,18 @@ function Test() {
             10. Բարձր եկամուտ ունեցող անձնավորությունը միշտ գնում է էժան ապրանք։ Ձեր կարծիքով
           </h3>
           <div className="questions">
-            <input onBlur={formik.handleBlur} onChange={formik.handleChange} className="radio-btn" type="radio" id="10֊1" name="q-10" value="4" />
+          <div className="question-answer-container">
+            <input onBlur={formik.handleBlur} onChange={formik.handleChange} className="radio-btn" type="radio" id="10֊1" name="q-10" value="4" checked={formik?.values['q-10'] === '4'}/>
             <label className="radio-label" htmlFor="10֊1">Համեստ է</label><br />
-            <input onBlur={formik.handleBlur} onChange={formik.handleChange} className="radio-btn" type="radio" id="10֊2" name="q-10" value="2" />
+          </div>
+          <div className="question-answer-container">
+            <input onBlur={formik.handleBlur} onChange={formik.handleChange} className="radio-btn" type="radio" id="10֊2" name="q-10" value="2" checked={formik?.values['q-10'] === '2'}/>
             <label className="radio-label" htmlFor="10֊2">Գծուծ է</label><br />
-            <input onBlur={formik.handleBlur} onChange={formik.handleChange} className="radio-btn" type="radio" id="10֊3" name="q-10" value="1" />
+          </div>
+          <div className="question-answer-container">
+            <input onBlur={formik.handleBlur} onChange={formik.handleChange} className="radio-btn" type="radio" id="10֊3" name="q-10" value="1" checked={formik?.values['q-10'] === '1'}/>
             <label className="radio-label" htmlFor="10֊3">Նա խնայող է</label><br />
+          </div>
             <br></br>
           </div>
         </div>

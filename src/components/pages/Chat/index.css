@@ -59,6 +59,7 @@ li span {
   align-items: center;
   justify-content: center;
   max-width: 1000px;
+  padding-bottom: 20px;
 }
 
 input {
@@ -95,6 +96,7 @@ button {
   background-color: pink;
   margin-left: 10px;
   transition: 200ms;
+  width: inherit;
 }
 
 #message-btn:active {

@@ -36,7 +36,7 @@ function Psychologists() {
   const [value, setValue] = useState(2.5);
   // console.log('*******users*******          ', users)
   return (
-    <Grid>
+    <Grid sx={{backgroundColor: "pink", height: "100vh", maxHeight: "100vh", overflow: "auto"}}>
       <Grid
         container
         direction="row"
@@ -71,9 +71,7 @@ function Psychologists() {
                         alt="strategicpsychology"
                         key={email}
                       />) : (
-            <img src={noImage} alt="Contact Us" style={{height: "200px" }} />
-                        
-                      // <PersonOutlineIcon height="200"/>
+                      <img src={noImage} alt="Contact Us" style={{height: "200px", width: "inherit" }} />
                     )}
 
                     <CardContent>

@@ -49,7 +49,7 @@ const MotivationBooks = () => {
               title={title}
               Children={
                 <div>
-                  <a href="https://icrrd.com/public/media/01-11-2020-212827The%207%20Habits%20of%20Highly%20Effective%20People.pdf"
+                  <a href={link}
                     target="_blank">
                     Կարդալ։ </a> <br></br>
                   {description}

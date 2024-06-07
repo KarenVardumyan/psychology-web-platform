@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import { doc, setDoc } from "firebase/firestore"; 
+import { doc, setDoc } from "firebase/firestore";
 import { auth, db } from "config/firebase";
 import { createUserDocumentFromAuth } from 'api/auth'
 
@@ -10,7 +10,7 @@ const useSignUp = () => {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
-  const [role, setRole] = useState("");
+  const [role, setRole] = useState("member");
   // const [userData, setUserData] = useState({
   //   role,
   //   displayName: name,

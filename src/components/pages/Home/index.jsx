@@ -19,6 +19,8 @@ import whatsapp from 'assets/img/whatsapp.jpg';
 import { Link } from 'react-router-dom';
 import { ReactComponent as LogOut } from 'assets/svg/logout.svg';
 import { auth } from "config/firebase";
+import useAuth from "hooks/useAuth";
+import { useMemo } from 'react';
 // import LogOut from 'assets/svg/logout.svg';
 
 const handleSignOut = () => {
@@ -28,9 +30,9 @@ const handleSignOut = () => {
 }
 
 function Home() {
+  const { user: currentUser, loading } = useAuth();
   return (
     <body>
-
       <header className="topheader">
         <div className="left-content">
           <div className="location-logo">
@@ -223,8 +225,11 @@ function Home() {
             <h2 id="carayutyun">Մեր ծառայությունները</h2>
             <Link to='/tests' target="_blank" className="service-button" >Հոգեբանական թեստեր</Link>
             <Link to='/motivation' className="service-button" >Մոտիվացիա</Link>
-            <a href="./chat/" target="_blank" className="service-button">Չաթ հոգեբանի հետ</a>
-
+            {!loading && (
+              <Link to='/psychologists' target="_blank" className="service-button" >
+                {currentUser?.role === "psychologist" ? 'Չաթ Պացիենտների հետ' : 'Չաթ հոգեբանի հետ'}
+              </Link>
+            )}
           </div>
         </div>
       </div>

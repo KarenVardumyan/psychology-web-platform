@@ -9,7 +9,8 @@ import {
   SignUp,
   Chat,
   Books,
-  Pictures
+  Pictures,
+  Psychologists
 } from 'components/pages';
 import { Navigate } from 'react-router-dom';
 import PrivateRoute from './PrivateRoute';
@@ -72,6 +73,11 @@ const routeObjects = [
   {
     path: 'motivation/pictures',
     element: <Pictures />,
+    isPrivateRoute: true
+  },
+  {
+    path: 'psychologists',
+    element: <Psychologists />,
     isPrivateRoute: true
   },
   // {

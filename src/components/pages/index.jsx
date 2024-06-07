@@ -8,3 +8,4 @@ export { default as SignUp } from './SignUp';
 export { default as Chat } from './Chat';
 export { default as Books } from './Books';
 export { default as Pictures } from './Pictures';
+export { default as Psychologists } from './Psychologists';

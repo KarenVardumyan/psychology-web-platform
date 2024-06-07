@@ -18,7 +18,10 @@ header {
 }
 
 #messages {
-  padding-bottom: 30%;
+  /* padding-bottom: 30%; */
+  min-height: 65vh;
+  max-height: 65vh;
+  overflow: auto;
 }
 
 li {

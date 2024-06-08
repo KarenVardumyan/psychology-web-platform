@@ -192,7 +192,9 @@ function CommentsDialog(props) {
                   </Grid>
                 </Grid>
                 <Grid item sx={{background: "lightgray"}}><Typography ml={2}>{comment.text}</Typography></Grid>
-                <Typography textAlign="end">{formatDate(comment.timestamp)}</Typography>
+                <Typography textAlign="end">
+                  {comment?.timestamp ? formatDate(comment.timestamp) : ''}
+                </Typography>
               </Grid>
             ))}
           </React.Fragment>

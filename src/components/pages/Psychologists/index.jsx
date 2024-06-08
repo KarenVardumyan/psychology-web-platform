@@ -47,7 +47,7 @@ function Psychologists() {
   return (
     <Grid
       sx={{
-        backgroundColor: "pink",
+        backgroundColor: "rgb(248, 229, 242)",
         height: "100vh",
         maxHeight: "100vh",
         overflow: "auto",
@@ -65,9 +65,7 @@ function Psychologists() {
           handleClose={handleClose}
           userData={selectedUserData}
         />
-        <Typography variant="h2" component="h2">
-          Մեր հոգեբանները
-        </Typography>
+        <h2 id="kap" style={{ transition: 'transform 0.3s ease', boxShadow: '0.3s ease' }}>Մեր հոգեբանները</h2>
       </Grid>
       {currentUser && users ? (
         <Grid

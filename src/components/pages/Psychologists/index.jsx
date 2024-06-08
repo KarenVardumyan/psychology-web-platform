@@ -24,9 +24,19 @@ import useUsersList from "hooks/useUsersList";
 import useSelectChat from "hooks/useSelectChat";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import noImage from "assets/img/no-Image-Placeholder.svg.png";
+import CommentsDialog from "./Comments";
 
 function Psychologists() {
   const { currentUser, handleSelect } = useSelectChat();
+  const [openCommentsDialog, setOpenCommentsDialog] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpenCommentsDialog(true);
+  };
+
+  const handleClose = () => {
+    setOpenCommentsDialog(false);
+  };
 
   const { users, updateUser } = useUsersList(currentUser);
   // const { text, handleSend, setText } = useSendMessage();
@@ -41,6 +51,7 @@ function Psychologists() {
         overflow: "auto",
       }}
     >
+      <CommentsDialog open={openCommentsDialog} handleClose={handleClose}/>
       <Grid
         container
         direction="row"
@@ -108,7 +119,7 @@ function Psychologists() {
                         alignItems="center"
                       >
                         <Grid container item xs={6}>
-                          <IconButton sx={{ "&:focus": { outline: "unset" } }}>
+                          <IconButton sx={{ "&:focus": { outline: "unset" } }} onClick={handleClickOpen}>
                             <CommentIcon
                               sx={{ height: "20px", width: "20px" }}
                               color="primary"

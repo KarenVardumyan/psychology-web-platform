@@ -29,9 +29,11 @@ import CommentsDialog from "./Comments";
 function Psychologists() {
   const { currentUser, handleSelect } = useSelectChat();
   const [openCommentsDialog, setOpenCommentsDialog] = useState(false);
+  const [selectedUserData, setSelectedUserData] = useState(null);
 
-  const handleClickOpen = () => {
+  const handleClickOpen = (userData) => {
     setOpenCommentsDialog(true);
+    setSelectedUserData(userData);
   };
 
   const handleClose = () => {
@@ -51,7 +53,6 @@ function Psychologists() {
         overflow: "auto",
       }}
     >
-      <CommentsDialog open={openCommentsDialog} handleClose={handleClose}/>
       <Grid
         container
         direction="row"
@@ -59,6 +60,11 @@ function Psychologists() {
         alignItems="center"
         padding={2}
       >
+        <CommentsDialog
+          open={openCommentsDialog}
+          handleClose={handleClose}
+          userData={selectedUserData}
+        />
         <Typography variant="h2" component="h2">
           Մեր հոգեբանները
         </Typography>
@@ -84,9 +90,8 @@ function Psychologists() {
               } = userInfo;
               const ratingValue = rating
                 ? Object.values(rating).reduce((a, b) => a + b, 0) /
-                  Object.keys(rating).length
+                Object.keys(rating).length
                 : 0;
-              console.log(ratingValue);
               return (
                 <Grid item md={6} sm={12} lg={4}>
                   <Card sx={{ maxWidth: 345, width: 345 }}>
@@ -119,7 +124,10 @@ function Psychologists() {
                         alignItems="center"
                       >
                         <Grid container item xs={6}>
-                          <IconButton sx={{ "&:focus": { outline: "unset" } }} onClick={handleClickOpen}>
+                          <IconButton
+                            sx={{ "&:focus": { outline: "unset" } }}
+                            onClick={() => handleClickOpen(uid)}
+                          >
                             <CommentIcon
                               sx={{ height: "20px", width: "20px" }}
                               color="primary"
@@ -137,7 +145,7 @@ function Psychologists() {
                           </IconButton>
                         </Grid>
                         <Grid item xs={6} display="flex" justifyContent="end">
-                          <span style={{display: "flex", alignItems: "center", marginBottom: "5px"}}>
+                          <span style={{ display: "flex", alignItems: "center", marginBottom: "5px" }}>
                             {rating && (rating[currentUser.uid] || 0)} /
                             {ratingValue !== 0 ? ratingValue.toFixed(2) : "no rating"}
                           </span>

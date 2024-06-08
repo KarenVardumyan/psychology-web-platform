@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
+
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import ListItemText from '@mui/material/ListItemText';
@@ -13,14 +14,54 @@ import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
 import { Grid } from "@mui/material";
 import { TransitionProps } from '@mui/material/transitions';
+import useSelectComments from "hooks/useSelectComments";
+import useAuth from "hooks/useAuth";
+import { db } from 'config/firebase';
+import { collection, query, orderBy, onSnapshot, addDoc, serverTimestamp } from 'firebase/firestore';
 
-const Transition = React.forwardRef(function Transition(props) {
-  const { ref } = props;
+
+const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
 function CommentsDialog(props) {
-  const { open, handleClose } = props;
+  const { open, handleClose, selectedUserData } = props;
+  const [comments, setComments] = useState([]);
+  const [comment, setComment] = useState('');
+  const uid = selectedUserData?.uid || null;
+  const { user } = useAuth();
+
+  // const { handleSelect } = useSelectComments(uid);
+  // handleSelect();
+  const handleCommentSubmit = async (e) => {
+    e.preventDefault();
+    if (user) {
+      try {
+        await addDoc(collection(db, 'comments'), {
+          text: comment,
+          uid: user.uid,
+          email: user.email,
+          timestamp: serverTimestamp(),
+        });
+        setComment('');
+      } catch (error) {
+        console.error('Error adding comment:', error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    const q = query(collection(db, 'comments'), orderBy('timestamp', 'desc'));
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const commentsData = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setComments(commentsData);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   return (
     <React.Fragment>
@@ -64,7 +105,29 @@ function CommentsDialog(props) {
           </Toolbar>
         </AppBar>
         <Grid>
-          <Typography>No comments</Typography>
+          {/* <Typography>No comments</Typography> */}
+          <div>
+            <h2>Comments</h2>
+            {comments.map((comment) => (
+              <div key={comment.id}>
+                <p>{comment.text}</p>
+                <small>{comment.email}</small>
+              </div>
+            ))}
+          </div>
+        </Grid>
+        <Grid>
+          <form onSubmit={handleCommentSubmit}>
+            <h2>Leave a Comment</h2>
+            <textarea
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              placeholder="Your comment"
+            />
+            <button type="submit" disabled={!user}>
+              Submit
+            </button>
+          </form>
         </Grid>
       </Dialog>
     </React.Fragment>

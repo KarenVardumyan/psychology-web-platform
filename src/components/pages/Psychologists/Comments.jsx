@@ -19,8 +19,26 @@ import useAuth from "hooks/useAuth";
 import { db } from 'config/firebase';
 import { collection, query, orderBy, onSnapshot, addDoc, serverTimestamp } from 'firebase/firestore';
 
-import Stack from '@mui/material/Stack';
 
+// Function to convert Firebase Timestamp to yyyy-mm-dd hh:mm:ss format
+function formatDate(firebaseTimestamp) {
+  // Convert Firebase Timestamp to JavaScript Date object
+  const date = firebaseTimestamp.toDate();
+
+  // Function to add leading zero if needed
+  const pad = (num) => (num < 10 ? '0' : '') + num;
+
+  // Extract components
+  const year = date.getFullYear();
+  const month = pad(date.getMonth() + 1); // Months are zero-based
+  const day = pad(date.getDate());
+  const hours = pad(date.getHours());
+  const minutes = pad(date.getMinutes());
+  const seconds = pad(date.getSeconds());
+
+  // Format the date string
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+}
 function stringToColor(string) {
   let hash = 0;
   let i;
@@ -173,7 +191,8 @@ function CommentsDialog(props) {
                     <Typography>{comment.name} {comment.surname}</Typography>
                   </Grid>
                 </Grid>
-                <Grid item><Typography ml={2}>{comment.text}</Typography></Grid>
+                <Grid item sx={{background: "lightgray"}}><Typography ml={2}>{comment.text}</Typography></Grid>
+                <Typography textAlign="end">{formatDate(comment.timestamp)}</Typography>
               </Grid>
             ))}
           </React.Fragment>
@@ -210,24 +229,6 @@ function CommentsDialog(props) {
                 Ուղարկել
               </button>
             </div>
-            {/* <p
-              id="kap"
-              style={{
-                transition: 'transform 0.3s ease',
-                boxShadow: '0.3s ease',
-                fontSize: "16px",
-                marginBottom: "10px"
-              }}
-            >
-              Թողնել մեկնաբանություն
-            </p>
-            <textarea
-              value={comment}
-              onChange={(e) => setComment(e.target.value)}
-            />
-            <button type="submit" disabled={!user}>
-              Ուղարկել
-            </button> */}
           </form>
         </Grid>
       </Dialog>

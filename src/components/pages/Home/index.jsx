@@ -17,11 +17,10 @@ import insta from 'assets/img/insta.jpg';
 import facebook from 'assets/img/facebook.jpg';
 import whatsapp from 'assets/img/whatsapp.jpg';
 import { Link } from 'react-router-dom';
-import { ReactComponent as LogOut } from 'assets/svg/logout.svg';
 import { auth } from "config/firebase";
 import useAuth from "hooks/useAuth";
-import { useMemo } from 'react';
-// import LogOut from 'assets/svg/logout.svg';
+import { IconButton } from '@mui/material';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const handleSignOut = () => {
   auth
@@ -31,6 +30,7 @@ const handleSignOut = () => {
 
 function Home() {
   const { user: currentUser, loading } = useAuth();
+
   return (
     <body>
       <header className="topheader">
@@ -52,7 +52,9 @@ function Home() {
             <img src={whatsapp} alt="WhatsApp Logo"></img>
           </div>
           <div className="logout-icon" >
-            <LogOut fill="red" onClick={handleSignOut}/>
+            <IconButton onClick={handleSignOut} sx={{height: "30px", width: "30px", "&:focus": { outline: "unset" }}}>
+              <LogoutIcon  sx={{ height: "30px", width: "30px", color: "rgb(253, 180, 192)" }}/>
+            </IconButton>
           </div>
         </div>
       </header>
@@ -225,9 +227,9 @@ function Home() {
             <h2 id="carayutyun">Մեր ծառայությունները</h2>
             <Link to='/tests' target="_blank" className="service-button" >Հոգեբանական թեստեր</Link>
             <Link to='/motivation' className="service-button" >Մոտիվացիա</Link>
-            {!loading && (
-              <Link to='/psychologists' target="_blank" className="service-button" >
-                {currentUser?.role === "psychologist" ? 'Չաթ Պացիենտների հետ' : 'Չաթ հոգեբանի հետ'}
+            {!loading && currentUser && (
+              <Link to='/psychologists' className="service-button" >
+                {currentUser?.role !== "psychologist" ? 'Չաթ Պացիենտների հետ' : 'Չաթ հոգեբանի հետ'}
               </Link>
             )}
           </div>

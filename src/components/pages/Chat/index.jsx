@@ -20,8 +20,8 @@ const ChatComponent = (props) => {
       <header className="header">
         <h2 className="title">Զրույց հոգեբանի հետ</h2>
       </header>
-      <div style={{display: "flex"}}>
-        <div className="users">
+      <div className="chat-users-container" style={{ display: "flex" }}>
+        <div className="chat-users">
           {users.map((item, index) => {
             return (
               <div
@@ -31,6 +31,7 @@ const ChatComponent = (props) => {
                   setSelectedUser(item);
                 }}
                 className="userCard"
+                style={{backgroundColor: selectedUser?.email === item?.email ? 'pink' : ''}}
                 key={index}
               >
                 {item.photoURL ? (
@@ -64,8 +65,8 @@ const ChatComponent = (props) => {
                     padding: "4px 8px",
                     borderRadius: "10px",
                     backgroundColor: `${message?.senderId === currentUser?.uid
-                        ? "#38ADC1"
-                        : "#FFC0CB"
+                      ? "pink"
+                      : "#FFC0CB"
                       }`,
                     margin: "4px",
                   }}
@@ -97,12 +98,15 @@ const ChatComponent = (props) => {
               <input
                 id="message-input"
                 type="text"
+                style={{border: "solid 2px pink"}}
                 value={text}
                 onChange={(e) => setText(e.target.value)}
               />
-              <button onClick={handleSend} id="message-btn" type="submit">
-                Ուղարկել
-              </button>
+              <div>
+                <button onClick={handleSend} id="message-btn" type="submit">
+                  Ուղարկել
+                </button>
+              </div>
             </div>
           )}
         </div>

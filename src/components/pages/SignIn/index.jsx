@@ -1,6 +1,8 @@
-import './styles.css';
+
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import useSignIn from "hooks/useSignIn";
+import './styles.css';
 
 const SignIn = () => {
   const {
@@ -20,19 +22,16 @@ const SignIn = () => {
     navigate("/home");
   };
 
-  function showPassword() {
-    var x = document.getElementById("signInPassword");
-    if (x.type === "password") {
-      x.type = "text";
-    } else {
-      x.type = "password";
-    }
-  }
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleShowPasswordChange = () => {
+    setShowPassword(!showPassword);
+  };
 
   return (
     <div className="sign-in-container">
       <div>
-        <h2>Sign In</h2>
+        <h2>Մուտք</h2>
       </div>
       {error && <p>{error}</p>}
       <form onSubmit={handleSubmit} className="sign-in-form">
@@ -44,18 +43,28 @@ const SignIn = () => {
           disabled={loading}
         />
         <input
-          type="password"
+          type={showPassword ? 'text' : 'password'}
           id="signInPassword"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
           disabled={loading}
         />
+        <div className="show-password-container">
+          <input
+            type="checkbox"
+            id="showPassword"
+            checked={showPassword}
+            onChange={handleShowPasswordChange}
+            style={{ height: "20px", width: "20px"}}
+          />
+          <label htmlFor="showPassword">Տեսնել գաղտնաբառը</label>
+        </div>
         <button type="submit" disabled={loading} className="sign-in-submit-button">
-          {loading ? "Signing In..." : "Sign In"}
+          {loading ? "Մուտք..." : "Մուտք"}
         </button>
       </form>
-      <a href='/signup'>Go to Sign up page</a>
+      <a href='/signup'>Գրանցվել</a>
     </div>
   );
 };

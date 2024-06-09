@@ -19,8 +19,8 @@ header {
 
 #messages {
   /* padding-bottom: 30%; */
-  min-height: 65vh;
-  max-height: 65vh;
+  min-height: 80%;
+  max-height: 80%;
   overflow: auto;
 }
 
@@ -41,8 +41,8 @@ li span {
 }
 
 #chat {
-  width: 80%;
-  margin: auto;
+  width: 100%;
+  margin-left: 20px;
 }
 
 #message-form {
@@ -57,12 +57,12 @@ li span {
 }
 
 #message-form-container {
-  margin: auto;
   display: flex;
   align-items: center;
-  justify-content: center;
-  max-width: 1000px;
+  justify-content: flex-start;
   padding-bottom: 20px;
+  height: 15%;
+  width: 100%;
 }
 
 input {
@@ -131,6 +131,7 @@ button {
   display: flex;
   align-items: center;
   cursor: pointer;
+  padding: 10px 5px;
 }
 
 .photo {
@@ -156,4 +157,15 @@ button {
   font-size: 12px;
   color: #ffffff;
   margin-right: 20px;
+}
+
+.chat-users-container {
+  display: flex;
+  height: calc(100vh - 65px);
+  max-height: calc(100vh - 65px);
+}
+
+.chat-users {
+  width: 120px;
+  border-right: 1px solid pink
 }

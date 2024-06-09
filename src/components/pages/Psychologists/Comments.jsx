@@ -222,7 +222,7 @@ function CommentsDialog(props) {
             <div id="message-form-container">
               <input
                 id="message-input"
-                style={{border: "double"}}
+                style={{border: "solid 2px pink"}}
                 type="text"
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}

@@ -1,5 +1,6 @@
-import './styles.css';
+import { useState } from "react";
 import useSignUp from "hooks/useSignUp";
+import './styles.css';
 
 const SignUp = () => {
   const {
@@ -16,6 +17,12 @@ const SignUp = () => {
     surname,
     setRole
   } = useSignUp();
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleShowPasswordChange = () => {
+    setShowPassword(!showPassword);
+  };
 
   return (
     <div className="sign-up-container">
@@ -59,12 +66,22 @@ const SignUp = () => {
           disabled={loading}
         />
         <input
-          type="password"
+          type={showPassword ? 'text' : 'password'}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
           disabled={loading}
         />
+        <div className="show-password-container">
+          <input
+            type="checkbox"
+            id="showPassword"
+            checked={showPassword}
+            onChange={handleShowPasswordChange}
+            style={{ height: "20px", width: "20px" }}
+          />
+          <label htmlFor="showPassword">Տեսնել գաղտնաբառը</label>
+        </div>
         <button type="submit" disabled={loading} className="sign-up-submit-button">
           {loading ? "Signing Up..." : "Sign Up"}
         </button>

@@ -58,9 +58,9 @@ function Psychologists() {
           handleClose={handleClose}
           userData={selectedUserData}
         />
-        <h2 id="kap" style={{ transition: 'transform 0.3s ease', boxShadow: '0.3s ease' }}>
+        {currentUser && (<h2 id="kap" style={{ transition: 'transform 0.3s ease', boxShadow: '0.3s ease' }}>
           {currentUser?.role === "psychologist" ? 'Մեր հոգեբանները' : 'Մեր պացիենտներիը'}
-        </h2>
+        </h2>)}
       </Grid>
       {currentUser && users && Boolean(users.length) ? (
         <Grid

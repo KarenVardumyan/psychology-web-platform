@@ -125,7 +125,7 @@ function Psychologists() {
                           />
                         </IconButton>
                         <IconButton sx={{ "&:focus": { outline: "unset" } }}>
-                          <Link to="/chat" target="_blank">
+                          <Link to="/chat">
                             <SendIcon
                               sx={{ height: "20px", width: "20px" }}
                               color="primary"

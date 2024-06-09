@@ -10,7 +10,8 @@ import {
   Chat,
   Books,
   Pictures,
-  Psychologists
+  Psychologists,
+  AboutAs
 } from 'components/pages';
 import { Navigate } from 'react-router-dom';
 import PrivateRoute from './PrivateRoute';
@@ -80,27 +81,11 @@ const routeObjects = [
     element: <Psychologists />,
     isPrivateRoute: true
   },
-  // {
-  //   path: 'motivation',
-  //   isPrivateRoute: true,
-  //   children: [
-  //     {
-  //       index: true,
-  //       element: <Motivation />,
-  //       isPrivateRoute: true
-  //     },
-  //     {
-  //       path: 'sounds',
-  //       element: <Sounds />,
-  //       isPrivateRoute: true
-  //     },
-  //     {
-  //       path: 'yoga',
-  //       element: <Yoga />,
-  //       isPrivateRoute: true
-  //     }
-  //   ]
-  // }
+  {
+    path: 'about-as',
+    element: <AboutAs />,
+    isPrivateRoute: true
+  }
 ]
 
 export default routeObjects;

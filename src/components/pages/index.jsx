@@ -9,3 +9,4 @@ export { default as Chat } from './Chat';
 export { default as Books } from './Books';
 export { default as Pictures } from './Pictures';
 export { default as Psychologists } from './Psychologists';
+export { default as AboutAs } from './AboutAs';

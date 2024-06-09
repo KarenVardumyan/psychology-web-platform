@@ -93,9 +93,10 @@ function Home() {
               <img src={aboutphoto} alt="About Picture" style={{ height: '95%' }} />
             </div>
             <div className="about-content">
-              <h2 id="masin" style={{ paddingBottom: '5%' }}>Մեր մասին</h2>
               <p>Բարի գալուստ CalmMind, որտեղ սկսվում է ներքին խաղաղության և անձնական աճի ուղին ...</p>
-              <button className="about-content-see-more"> <a href="./index1.html" style={{ fontSize: '3vh' }}>Իմանալ ավելին</a></button>
+              <button className="about-content-see-more">
+              <Link to='/about-as' className="about-content-see-more" >Իմանալ ավելին</Link>
+              </button>
             </div>
           </div>
 

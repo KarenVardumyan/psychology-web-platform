@@ -33,8 +33,8 @@ const PaymentOptions = ({ newUser, onClose }) => {
           const data = {
             email: newUser.email,
             name: newUser.displayName,
-            priceId: newUser.payment.plan,
-            quantity: newUser.payment.quantity,
+            priceId: "price_1PPlCVGqrPXMTFdh3ACt1xON",
+            quantity: 1,
           };
 
           const subscription = await createSubscription(data);

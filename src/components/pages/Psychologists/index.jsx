@@ -137,7 +137,7 @@ function Psychologists() {
                       <Grid item xs={6} display="flex" justifyContent="end">
                         <span style={{ display: "flex", alignItems: "center", marginBottom: "5px" }}>
                           {rating && (rating[currentUser.uid] || 0)} /
-                          {ratingValue !== 0 ? ratingValue.toFixed(2) : "no rating"}
+                          {ratingValue !== 0 && ratingValue ? ratingValue.toFixed(2) : "no rating"}
                         </span>
                         <Rating
                           name="half-rating"
@@ -145,13 +145,15 @@ function Psychologists() {
                           value={ratingValue.toFixed(2)}
                           precision={0.5}
                           size="large"
-                          onChange={(event, newValue) => {
-                            console.log(userInfo);
+                          onChange={(_, newValue) => {
+                            const newRating = rating ? {...rating} : {};
+                            if(newValue === null) {
+                              delete newRating[currentUser.uid];
+                            } else {
+                              newRating[currentUser.uid] = newValue;
+                            }
                             updateUser(uid, {
-                              rating: {
-                                ...rating,
-                                [currentUser.uid]: newValue,
-                              },
+                              rating: newRating
                             });
                           }}
                         />

@@ -4,26 +4,26 @@ import { Elements } from "@stripe/react-stripe-js";
 
 import CheckoutForm from "components/shared/Payment/CheckoutForm";
 import { createSubscription } from "api/stripe.js";
+import { updateCurrentUser } from "api/auth";
 
 const STRIPE_PUBLISHABLE_KEY = "pk_test_51PPeLCGqrPXMTFdhleIoJQ9QjiR0iRQgZKvIyOHCpehmRK8kWiHNhTcW05NPtCwXxT7f2oZLPd9Zj48JyO9snBNx001eZUGZ6f"
 const stripePromise = loadStripe(STRIPE_PUBLISHABLE_KEY);
 
-const PaymentOptions = ({ newUser, onClose }) => {
+const PaymentOptions = ({ currentUser, psychologistId }) => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [clientSecret, setClientSecret] = useState("");
   const options = {
     clientSecret,
   };
 
-  const onPurchaseOrderClick = async () => {
-    // const updates = {
-    //   payment: {
-    //     ...newUser.payment,
-    //     quantity: Number(newUser.payment.quantity),
-    //   },
-    // };
-    // updateCurrentUser(updates);
-    onClose();
+  const onSuccess = async () => {
+    const updates = {
+      payments: {
+        ...currentUser.payments,
+        [psychologistId]: true,
+      },
+    };
+    updateCurrentUser(currentUser.uid, updates).then(() => window.location.reload());
   };
 
   useEffect(
@@ -31,9 +31,9 @@ const PaymentOptions = ({ newUser, onClose }) => {
       (async () => {
         try {
           const data = {
-            email: newUser.email,
-            name: newUser.displayName,
-            priceId: "price_1PPlCVGqrPXMTFdh3ACt1xON",
+            email: currentUser.email,
+            name: currentUser.displayName,
+            priceId: "price_1PPq5bGqrPXMTFdhvgSEObra",
             quantity: 1,
           };
 
@@ -55,7 +55,7 @@ const PaymentOptions = ({ newUser, onClose }) => {
       })();
     },
     // eslint-disable-next-line
-    [newUser?.email]
+    [currentUser?.email]
   );
 
   return (
@@ -63,7 +63,7 @@ const PaymentOptions = ({ newUser, onClose }) => {
       <>
         {clientSecret ? (
           <Elements stripe={stripePromise} options={options} key={clientSecret}>
-            <CheckoutForm onSuccess={onPurchaseOrderClick} />
+            <CheckoutForm onSuccess={onSuccess} />
           </Elements>
         ) : (
           <>

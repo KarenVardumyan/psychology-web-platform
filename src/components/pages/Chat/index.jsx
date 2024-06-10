@@ -4,11 +4,13 @@ import useSendMessage from "hooks/useSendMessage";
 import useMessages from "hooks/useMessages";
 import useChats from "hooks/useChats";
 import useUsersList from "hooks/useUsersList";
+import PaymentOptions from "components/shared/Payment/PaymentOptions"
 import "./index.css";
 
 const ChatComponent = (props) => {
   // const { selectedUser, currentUser, users} = props;
   const [selectedUser, setSelectedUser] = useState(null);
+  const [showPayment, setShowPayment] = useState(false);
   const { currentUser, handleSelect } = useSelectChat();
   const { users } = useUsersList(currentUser);
   const { text, handleSend, setText } = useSendMessage();
@@ -26,12 +28,16 @@ const ChatComponent = (props) => {
             return (
               <div
                 onClick={() => {
-                  handleSelect(item);
-                  handleSelectChat(item);
-                  setSelectedUser(item);
+                  if (currentUser?.role === "psychologist" || currentUser?.payments?.[item.uid]) {
+                    handleSelect(item);
+                    handleSelectChat(item);
+                    setSelectedUser(item);
+                    setShowPayment(false)
+                  } else {
+                    setSelectedUser(item); setShowPayment(true) }
                 }}
                 className="userCard"
-                style={{backgroundColor: selectedUser?.email === item?.email ? 'pink' : ''}}
+                style={{ backgroundColor: selectedUser?.email === item?.email ? 'pink' : '' }}
                 key={index}
               >
                 {item.photoURL ? (
@@ -50,11 +56,12 @@ const ChatComponent = (props) => {
         </div>
         <div id="chat">
           <ul id="messages">
-            {messages.map((message, index) => {
+            {showPayment && currentUser && currentUser?.role !== "psychologist" && <PaymentOptions currentUser={currentUser} psychologistId={selectedUser?.uid} />}
+            {!showPayment && messages.map((message, index) => {
               const messageOwner =
-                message.senderId === currentUser?.uid
-                  ? currentUser
-                  : selectedUser;
+              message.senderId === currentUser?.uid
+              ? currentUser
+              : selectedUser;
               return (
                 <li
                   key={index}
@@ -79,7 +86,7 @@ const ChatComponent = (props) => {
                     />
                   ) : (
                     <div className="name">
-                      <span>{messageOwner.displayName[0].toUpperCase()}</span>
+                      <span>{messageOwner.displayName?.[0].toUpperCase()}</span>
                     </div>
                   )}
                   <div className="message-header">
@@ -93,12 +100,12 @@ const ChatComponent = (props) => {
               );
             })}
           </ul>
-          {selectedUser && (
+          {selectedUser && (!showPayment || currentUser?.role === "psychologist") && (
             <div id="message-form-container">
               <input
                 id="message-input"
                 type="text"
-                style={{border: "solid 2px pink"}}
+                style={{ border: "solid 2px pink" }}
                 value={text}
                 onChange={(e) => setText(e.target.value)}
               />

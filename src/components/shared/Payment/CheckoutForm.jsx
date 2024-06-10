@@ -5,6 +5,8 @@ import {
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
+import { Grid } from "@mui/material";
+import { Button } from "@mui/base";
 
 const CheckoutForm = ({ onSuccess }) => {
   const stripe = useStripe();
@@ -49,7 +51,7 @@ const CheckoutForm = ({ onSuccess }) => {
 
 
   return (
-      <PaymentElement onChange={(e) => console.log(e) } />
+    <Grid><PaymentElement onChange={(e) => console.log(e)} /><Button onClick={handlePayment}>Pay</Button>{errorMessage}</Grid>
   );
 };
 

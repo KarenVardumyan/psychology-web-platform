@@ -32,7 +32,6 @@ const useUsersList = (currentUser) => {
   }, [currentUser]);
 
   const updateUser = async (id, updates) => {
-    console.log(id)
     if (!id) return;
     const userDocRef = doc(db, "users", id);
     try {

@@ -32,3 +32,15 @@ export const getUserData = async (uid) => {
     return { ...userSnapshot.data(), uid }
   } else { return null }
 };
+
+export const updateCurrentUser = async (uid, updates) => {
+  if (!uid) return;
+
+  const userDocRef = doc(db, "users", uid);
+  try {
+    await setDoc(userDocRef, updates, { merge: true });
+  } catch (error) {
+    return error;
+  }
+  return userDocRef;
+};

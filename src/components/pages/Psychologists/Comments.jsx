@@ -1,24 +1,31 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemButton from '@mui/material/ListItemButton';
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import CloseIcon from '@mui/icons-material/Close';
-import Slide from '@mui/material/Slide';
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import ListItemText from "@mui/material/ListItemText";
+import ListItemButton from "@mui/material/ListItemButton";
+import List from "@mui/material/List";
+import Divider from "@mui/material/Divider";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import CloseIcon from "@mui/icons-material/Close";
+import Slide from "@mui/material/Slide";
 import { Grid, Avatar } from "@mui/material";
-import { TransitionProps } from '@mui/material/transitions';
+import { TransitionProps } from "@mui/material/transitions";
 import useSelectComments from "hooks/useSelectComments";
 import useAuth from "hooks/useAuth";
-import { db } from 'config/firebase';
-import { collection, query, orderBy, onSnapshot, addDoc, serverTimestamp } from 'firebase/firestore';
-
+import { db } from "config/firebase";
+import {
+  collection,
+  query,
+  orderBy,
+  onSnapshot,
+  addDoc,
+  serverTimestamp,
+  where,
+} from "firebase/firestore";
 
 // Function to convert Firebase Timestamp to yyyy-mm-dd hh:mm:ss format
 function formatDate(firebaseTimestamp) {
@@ -26,7 +33,7 @@ function formatDate(firebaseTimestamp) {
   const date = firebaseTimestamp.toDate();
 
   // Function to add leading zero if needed
-  const pad = (num) => (num < 10 ? '0' : '') + num;
+  const pad = (num) => (num < 10 ? "0" : "") + num;
 
   // Extract components
   const year = date.getFullYear();
@@ -48,7 +55,7 @@ function stringToColor(string) {
     hash = string.charCodeAt(i) + ((hash << 5) - hash);
   }
 
-  let color = '#';
+  let color = "#";
 
   for (i = 0; i < 3; i += 1) {
     const value = (hash >> (i * 8)) & 0xff;
@@ -64,7 +71,7 @@ function stringAvatar(name) {
     sx: {
       bgcolor: stringToColor(name),
     },
-    children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
+    children: `${name.split(" ")[0][0]}${name.split(" ")[1][0]}`,
   };
 }
 
@@ -75,44 +82,50 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 function CommentsDialog(props) {
   const { open, handleClose, selectedUserData } = props;
   const [comments, setComments] = useState([]);
-  const [comment, setComment] = useState('');
-  const uid = selectedUserData?.uid || null;
+  const [comment, setComment] = useState("");
   const { user } = useAuth();
-
+  console.log(selectedUserData);
   // const { handleSelect } = useSelectComments(uid);
   // handleSelect();
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
     if (user) {
       try {
-        await addDoc(collection(db, 'comments'), {
+        await addDoc(collection(db, "comments"), {
           text: comment,
           uid: user.uid,
           email: user.email,
           timestamp: serverTimestamp(),
           name: user.displayName,
-          surname: user.surname,
-          photoURL: user.photoURL
+          surname: user?.surname || "",
+          photoURL: user?.photoURL || "",
+          to: selectedUserData.uid,
         });
-        setComment('');
+        setComment("");
       } catch (error) {
-        console.error('Error adding comment:', error);
+        console.error("Error adding comment:", error);
       }
     }
   };
 
   useEffect(() => {
-    const q = query(collection(db, 'comments'), orderBy('timestamp', 'desc'));
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      const commentsData = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setComments(commentsData);
-    });
+    if (selectedUserData) {
+      const q = query(
+        collection(db, "comments"),
+        where("to", "==", selectedUserData.uid),
+        orderBy("timestamp", "desc")
+      );
+      const unsubscribe = onSnapshot(q, (snapshot) => {
+        const commentsData = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setComments(commentsData);
+      });
 
-    return () => unsubscribe();
-  }, []);
+      return () => unsubscribe();
+    }
+  }, [selectedUserData]);
 
   return (
     <React.Fragment>
@@ -127,18 +140,18 @@ function CommentsDialog(props) {
             width: "400px",
             minWidth: "400px",
             overflow: "hidden",
-          }
+          },
         }}
       >
         <AppBar
           sx={{
-            position: 'relative',
+            position: "relative",
             height: "40px",
             display: "flex",
             justifyContent: "center",
             backgroundColor: "#ffcbca",
             boxShadow: "0 2px 4px 0 rgba(0, 0, 0, .2)",
-            padding: 0
+            padding: 0,
           }}
         >
           <Grid>
@@ -164,13 +177,17 @@ function CommentsDialog(props) {
             </Grid>
           </Grid>
         </AppBar>
-        <Grid sx={{ maxHeight: "230px", minHeight: "230px", overflow: "auto" }} padding={2}>
-          <p id="kap"
+        <Grid
+          sx={{ maxHeight: "230px", minHeight: "230px", overflow: "auto" }}
+          padding={2}
+        >
+          <p
+            id="kap"
             style={{
-              transition: 'transform 0.3s ease',
-              boxShadow: '0.3s ease',
+              transition: "transform 0.3s ease",
+              boxShadow: "0.3s ease",
               fontSize: "16px",
-              marginBottom: "10px"
+              marginBottom: "10px",
             }}
           >
             Մեկնաբանություններ
@@ -182,18 +199,29 @@ function CommentsDialog(props) {
                 <Grid item container>
                   <Grid item xs={1}>
                     {comment.photoURL ? (
-                      <Avatar alt="user photo" src={comment.photoURL} sx={{ width: 25, height: 25 }} />
+                      <Avatar
+                        alt="user photo"
+                        src={comment.photoURL}
+                        sx={{ width: 25, height: 25 }}
+                      />
                     ) : (
-                      <Avatar {...stringAvatar(`${comment.name} ${comment.surname}`)} sx={{ width: 25, height: 25 }} />
+                      <Avatar
+                        {...stringAvatar(`${comment.name} ${comment.surname}`)}
+                        sx={{ width: 25, height: 25 }}
+                      />
                     )}
                   </Grid>
                   <Grid item>
-                    <Typography>{comment.name} {comment.surname}</Typography>
+                    <Typography>
+                      {comment.name} {comment.surname}
+                    </Typography>
                   </Grid>
                 </Grid>
-                <Grid item sx={{background: "lightgray"}}><Typography ml={2}>{comment.text}</Typography></Grid>
+                <Grid item sx={{ background: "lightgray" }}>
+                  <Typography ml={2}>{comment.text}</Typography>
+                </Grid>
                 <Typography textAlign="end">
-                  {comment?.timestamp ? formatDate(comment.timestamp) : ''}
+                  {comment?.timestamp ? formatDate(comment.timestamp) : ""}
                 </Typography>
               </Grid>
             ))}
@@ -210,10 +238,10 @@ function CommentsDialog(props) {
               transition: "transform 0.3s ease, color 0.3s ease",
               transition: "color 0.3s ease",
               fontSize: "9vh",
-              transition: 'transform 0.3s ease',
-              boxShadow: '0.3s ease',
+              transition: "transform 0.3s ease",
+              boxShadow: "0.3s ease",
               fontSize: "16px",
-              marginBottom: "10px"
+              marginBottom: "10px",
             }}
           >
             Թողնել մեկնաբանություն
@@ -222,7 +250,7 @@ function CommentsDialog(props) {
             <div id="message-form-container">
               <input
                 id="message-input"
-                style={{border: "solid 2px pink"}}
+                style={{ border: "solid 2px pink" }}
                 type="text"
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}

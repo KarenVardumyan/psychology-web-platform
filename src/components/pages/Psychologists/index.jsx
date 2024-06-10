@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Typography,
   Card,
@@ -12,6 +12,7 @@ import {
   IconButton,
   Skeleton
 } from "@mui/material";
+
 import SendIcon from "@mui/icons-material/Send";
 import StarIcon from "@mui/icons-material/Star";
 import CommentIcon from "@mui/icons-material/Comment";
@@ -22,9 +23,11 @@ import noImage from "assets/img/no-Image-Placeholder.svg.png";
 import CommentsDialog from "./Comments";
 
 function Psychologists() {
+  const navigate = useNavigate();
   const { currentUser, handleSelect } = useSelectChat();
   const [openCommentsDialog, setOpenCommentsDialog] = useState(false);
   const [selectedUserData, setSelectedUserData] = useState(null);
+  const { users, updateUser } = useUsersList(currentUser);
 
   const handleClickOpen = (userData) => {
     setOpenCommentsDialog(true);
@@ -35,7 +38,25 @@ function Psychologists() {
     setOpenCommentsDialog(false);
   };
 
-  const { users, updateUser } = useUsersList(currentUser);
+  const handleSendMassage = (userInfo) => {
+    // const { uid } = userInfo;
+    // psychologistId
+    console.log('************        ', userInfo, currentUser)
+    if(currentUser?.role === "psychologist" || currentUser?.role === "solder" || currentUser?.payments?.[userInfo.uid]) {
+      return navigate(`/chat/${userInfo.uid}`);
+    } else {
+      navigate(`/payment/${userInfo.uid}`);
+    }
+    // if (currentUser?.role === "psychologist" || currentUser?.payments?.[item.uid]) {
+    //   handleSelect(item);
+    //   handleSelectChat(item);
+    //   setSelectedUser(item);
+    //   setShowPayment(false)
+    // } else {
+    //   setSelectedUser(item);
+    //   setShowPayment(true);
+    // }
+  };
 
   return (
     <Grid
@@ -56,10 +77,10 @@ function Psychologists() {
         <CommentsDialog
           open={openCommentsDialog}
           handleClose={handleClose}
-          userData={selectedUserData}
+          selectedUserData={selectedUserData}
         />
         {currentUser && (<h2 id="kap" style={{ transition: 'transform 0.3s ease', boxShadow: '0.3s ease' }}>
-          {currentUser?.role === "psychologist" ? 'Մեր հոգեբանները' : 'Մեր պացիենտներիը'}
+          {currentUser?.role === "psychologist" ? 'Մեր պացիենտները' : 'Մեր հոգեբանները'}
         </h2>)}
       </Grid>
       {currentUser && users && Boolean(users.length) ? (
@@ -116,7 +137,7 @@ function Psychologists() {
                       <Grid container item xs={6}>
                         <IconButton
                           sx={{ "&:focus": { outline: "unset" } }}
-                          onClick={() => handleClickOpen(uid)}
+                          onClick={() => handleClickOpen(userInfo)}
                         >
                           <CommentIcon
                             sx={{ height: "20px", width: "20px" }}
@@ -124,14 +145,17 @@ function Psychologists() {
                             cursor="pointer"
                           />
                         </IconButton>
-                        <IconButton sx={{ "&:focus": { outline: "unset" } }}>
-                          <Link to="/chat">
+                        <IconButton
+                          sx={{ "&:focus": { outline: "unset" } }}
+                          onClick={ () => {handleSendMassage(userInfo)}}
+                        >
+                          {/* <Link to="/chat"> */}
                             <SendIcon
                               sx={{ height: "20px", width: "20px" }}
                               color="primary"
                               cursor="pointer"
                             />
-                          </Link>
+                          {/* </Link> */}
                         </IconButton>
                       </Grid>
                       <Grid item xs={6} display="flex" justifyContent="end">

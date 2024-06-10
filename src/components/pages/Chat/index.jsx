@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 import useSelectChat from "hooks/useSelectChat";
 import useSendMessage from "hooks/useSendMessage";
 import useMessages from "hooks/useMessages";
@@ -9,11 +10,13 @@ import "./index.css";
 
 const ChatComponent = (props) => {
   // const { selectedUser, currentUser, users} = props;
-  const [selectedUser, setSelectedUser] = useState(null);
+  const { selectedUserUid } = useParams();
   const [showPayment, setShowPayment] = useState(false);
   const { currentUser, handleSelect } = useSelectChat();
   const { users } = useUsersList(currentUser);
   const { text, handleSend, setText } = useSendMessage();
+  // const defaultSelectedChat = 
+  const [selectedUser, setSelectedUser] = useState(null);
   const { chats, handleSelectChat } = useChats();
   const { messages } = useMessages();
 
@@ -24,20 +27,16 @@ const ChatComponent = (props) => {
       </header>
       <div className="chat-users-container" style={{ display: "flex" }}>
         <div className="chat-users">
-          {users.map((item, index) => {
+          {users?.filter((user) => currentUser?.payments?.[user?.uid]).map((item, index) => {
             return (
               <div
                 onClick={() => {
-                  if (currentUser?.role === "psychologist" || currentUser?.payments?.[item.uid]) {
-                    handleSelect(item);
-                    handleSelectChat(item);
-                    setSelectedUser(item);
-                    setShowPayment(false)
-                  } else {
-                    setSelectedUser(item); setShowPayment(true) }
+                  handleSelect(item);
+                  handleSelectChat(item);
+                  setSelectedUser(item);
                 }}
                 className="userCard"
-                style={{ backgroundColor: selectedUser?.email === item?.email ? 'pink' : '' }}
+                style={{ backgroundColor: selectedUserUid === item?.uid ? 'pink' : '' }}
                 key={index}
               >
                 {item.photoURL ? (
@@ -56,7 +55,7 @@ const ChatComponent = (props) => {
         </div>
         <div id="chat">
           <ul id="messages">
-            {showPayment && currentUser && currentUser?.role !== "psychologist" && <PaymentOptions currentUser={currentUser} psychologistId={selectedUser?.uid} />}
+            {showPayment && currentUser && currentUser?.role !== "psychologist" && <PaymentOptions currentUser={currentUser} selectedUserUid={selectedUser?.uid} />}
             {!showPayment && messages.map((message, index) => {
               const messageOwner =
               message.senderId === currentUser?.uid

@@ -230,7 +230,7 @@ function Home() {
             <Link to='/motivation' className="service-button" >Մոտիվացիա</Link>
             {!loading && currentUser && (
               <Link to='/psychologists' className="service-button" >
-                {currentUser?.role !== "psychologist" ? 'Չաթ Պացիենտների հետ' : 'Չաթ հոգեբանի հետ'}
+                {currentUser?.role === "psychologist" ? 'Չաթ Պացիենտների հետ' : 'Չաթ հոգեբանի հետ'}
               </Link>
             )}
           </div>

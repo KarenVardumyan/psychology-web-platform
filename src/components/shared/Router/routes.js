@@ -11,7 +11,8 @@ import {
   Books,
   Pictures,
   Psychologists,
-  AboutAs
+  AboutAs,
+  Payment
 } from 'components/pages';
 import { Navigate } from 'react-router-dom';
 import PrivateRoute from './PrivateRoute';
@@ -46,7 +47,7 @@ const routeObjects = [
     isPrivateRoute: true
   },
   {
-    path: 'chat',
+    path: 'chat/:selectedUserUid',
     element: <PrivateRoute><Chat /></PrivateRoute>,
     isPrivateRoute: true
   },
@@ -84,6 +85,11 @@ const routeObjects = [
   {
     path: 'about-as',
     element: <AboutAs />,
+    isPrivateRoute: true
+  },
+  {
+    path: 'payment/:psychologistId',
+    element: <Payment />,
     isPrivateRoute: true
   }
 ]

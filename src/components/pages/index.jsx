@@ -10,3 +10,4 @@ export { default as Books } from './Books';
 export { default as Pictures } from './Pictures';
 export { default as Psychologists } from './Psychologists';
 export { default as AboutAs } from './AboutAs';
+export {default as Payment} from './Payment';

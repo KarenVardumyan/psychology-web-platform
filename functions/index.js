@@ -57,9 +57,14 @@ const createSubscription = async (data) => {
     expand: ["latest_invoice.payment_intent"],
   });
 
+  // functions.logger.log(
+  //   "============ END ===========: createSubscription: " +
+  //     subscription.latest_invoice.payment_intent.client_secret
+  // );
+
   functions.logger.log(
-    "============ END ===========: createSubscription: " +
-      subscription.latest_invoice.payment_intent.client_secret
+    "============ subscription ===========: createSubscription: ",
+      subscription
   );
   return {
     clientSecret: subscription.latest_invoice.payment_intent.client_secret,

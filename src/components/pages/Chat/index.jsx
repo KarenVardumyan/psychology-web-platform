@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import useSelectChat from "hooks/useSelectChat";
 import useSendMessage from "hooks/useSendMessage";
@@ -15,10 +15,16 @@ const ChatComponent = (props) => {
   const { currentUser, handleSelect } = useSelectChat();
   const { users } = useUsersList(currentUser);
   const { text, handleSend, setText } = useSendMessage();
-  // const defaultSelectedChat = 
-  const [selectedUser, setSelectedUser] = useState(null);
+  const [selectedUser, setSelectedUser] = useState();
   const { chats, handleSelectChat } = useChats();
   const { messages } = useMessages();
+
+  // useEffect(() => {
+  //   if(users.length && !selectedUser) {
+  //     const activeChatUser = users.find((user) => user.uid === selectedUserUid);
+  //     setSelectedUser(activeChatUser);
+  //   }
+  // },[])
 
   return (
     <div>
@@ -55,12 +61,13 @@ const ChatComponent = (props) => {
         </div>
         <div id="chat">
           <ul id="messages">
-            {showPayment && currentUser && currentUser?.role !== "psychologist" && <PaymentOptions currentUser={currentUser} selectedUserUid={selectedUser?.uid} />}
-            {!showPayment && messages.map((message, index) => {
+            {/* {showPayment && currentUser && currentUser?.role !== "psychologist" && <PaymentOptions currentUser={currentUser} selectedUserUid={selectedUser?.uid} />} */}
+            {messages.map((message, index) => {
               const messageOwner =
               message.senderId === currentUser?.uid
               ? currentUser
               : selectedUser;
+              console.log('***************         ', messageOwner)
               return (
                 <li
                   key={index}

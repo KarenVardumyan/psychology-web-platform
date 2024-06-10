@@ -51,8 +51,15 @@ const CheckoutForm = ({ onSuccess }) => {
 
 
   return (
-    <Grid>
-      <PaymentElement onChange={(e) => console.log(e)} /><Button onClick={handlePayment}>Pay</Button>{errorMessage}
+    <Grid item width={500}>
+      <PaymentElement onChange={(e) => console.log(e)} />
+      <button
+        className="btn"
+        onClick={handlePayment}
+      >
+        Pay
+      </button>
+      {errorMessage}
     </Grid>
   );
 };

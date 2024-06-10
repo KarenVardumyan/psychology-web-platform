@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
+import { useNavigate } from "react-router-dom";
 
 import CheckoutForm from "components/shared/Payment/CheckoutForm";
 import { createSubscription } from "api/stripe.js";
 import { updateCurrentUser } from "api/auth";
+import { Grid } from "@mui/material";
 
 const STRIPE_PUBLISHABLE_KEY = "pk_test_51PPeLCGqrPXMTFdhleIoJQ9QjiR0iRQgZKvIyOHCpehmRK8kWiHNhTcW05NPtCwXxT7f2oZLPd9Zj48JyO9snBNx001eZUGZ6f"
 const stripePromise = loadStripe(STRIPE_PUBLISHABLE_KEY);
@@ -12,6 +14,8 @@ const stripePromise = loadStripe(STRIPE_PUBLISHABLE_KEY);
 const PaymentOptions = ({ currentUser, psychologistId }) => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [clientSecret, setClientSecret] = useState("");
+  const navigate = useNavigate();
+
   const options = {
     clientSecret,
   };
@@ -23,7 +27,7 @@ const PaymentOptions = ({ currentUser, psychologistId }) => {
         [psychologistId]: true,
       },
     };
-    updateCurrentUser(currentUser.uid, updates).then(() => window.location.reload());
+    updateCurrentUser(currentUser.uid, updates).then(() => navigate(`/chat/${psychologistId}`))
   };
 
   useEffect(
@@ -49,6 +53,7 @@ const PaymentOptions = ({ currentUser, psychologistId }) => {
 
             // TODO: Delete me
           } catch (err) {
+            window.location.reload();
             console.log(err);
             setClientSecret(null);
             setErrorMessage('');
@@ -61,7 +66,7 @@ const PaymentOptions = ({ currentUser, psychologistId }) => {
   );
 
   return (
-    <div>
+    <Grid width={500}>
       <>
         {clientSecret ? (
           <Elements stripe={stripePromise} options={options} key={clientSecret}>
@@ -75,7 +80,7 @@ const PaymentOptions = ({ currentUser, psychologistId }) => {
           </>
         )}
       </>
-    </div>
+    </Grid>
   );
 };
 

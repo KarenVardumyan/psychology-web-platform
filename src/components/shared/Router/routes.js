@@ -54,42 +54,42 @@ const routeObjects = [
   {
     path: 'motivation',
     index: true,
-    element: <Motivation />,
+    element: <PrivateRoute><Motivation />,</PrivateRoute>,
     isPrivateRoute: true,
   },
   {
     path: 'motivation/sounds',
-    element: <Sounds />,
+    element: <PrivateRoute><Sounds /></PrivateRoute>,
     isPrivateRoute: true
   },
   {
     path: 'motivation/yoga',
-    element: <Yoga />,
+    element: <PrivateRoute><Yoga /></PrivateRoute>,
     isPrivateRoute: true
   },
   {
     path: 'motivation/books',
-    element: <Books />,
+    element: <PrivateRoute><Books /></PrivateRoute>,
     isPrivateRoute: true
   },
   {
     path: 'motivation/pictures',
-    element: <Pictures />,
+    element: <PrivateRoute><Pictures /></PrivateRoute>,
     isPrivateRoute: true
   },
   {
     path: 'psychologists',
-    element: <Psychologists />,
+    element: <PrivateRoute><Psychologists /></PrivateRoute>,
     isPrivateRoute: true
   },
   {
     path: 'about-as',
-    element: <AboutAs />,
+    element: <PrivateRoute><AboutAs /></PrivateRoute>,
     isPrivateRoute: true
   },
   {
     path: 'payment/:psychologistId',
-    element: <Payment />,
+    element: <PrivateRoute><Payment /></PrivateRoute>,
     isPrivateRoute: true
   }
 ]

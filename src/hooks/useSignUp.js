@@ -3,7 +3,8 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { doc, setDoc } from "firebase/firestore";
 import { auth, db } from "config/firebase";
-import { createUserDocumentFromAuth } from 'api/auth'
+import { createUserDocumentFromAuth } from "api/auth";
+import mediaUploader from "api/mediaUploader.api"
 
 const useSignUp = () => {
   const [email, setEmail] = useState("");
@@ -11,6 +12,10 @@ const useSignUp = () => {
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
   const [role, setRole] = useState("member");
+  const [photo, setPhoto] = useState(null);
+  const [category, setCategory] = useState(role === "psychologist" ? "commonPsychologist" : "");
+  const [description, setDescription] = useState("");
+
   // const [userData, setUserData] = useState({
   //   role,
   //   displayName: name,
@@ -26,16 +31,19 @@ const useSignUp = () => {
     setLoading(true);
     setError(null);
     try {
-      const res = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+      const res = await createUserWithEmailAndPassword(auth, email, password);
+      let photoFromStorage = "";
+      if(photo) {
+        photoFromStorage = await mediaUploader(photo.file, `users/${res.user.uid}/profilePhoto`);
+      }
       await createUserDocumentFromAuth(res.user, {
         role,
         displayName: name,
-        surname
-      })
+        surname,
+        photoURL: photoFromStorage,
+        category,
+        description
+      });
       await setDoc(doc(db, "userChats", res.user.uid), {});
       navigate("/home");
     } catch (err) {
@@ -58,7 +66,13 @@ const useSignUp = () => {
     name,
     surname,
     role,
-    setRole
+    setRole,
+    photo,
+    setPhoto,
+    category,
+    setCategory,
+    description,
+    setDescription
   };
 };
 

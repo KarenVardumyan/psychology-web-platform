@@ -5,13 +5,12 @@ import useSendMessage from "hooks/useSendMessage";
 import useMessages from "hooks/useMessages";
 import useChats from "hooks/useChats";
 import useUsersList from "hooks/useUsersList";
-import PaymentOptions from "components/shared/Payment/PaymentOptions"
+import PaymentOptions from "components/shared/Payment/PaymentOptions";
 import "./index.css";
 
 const ChatComponent = (props) => {
   // const { selectedUser, currentUser, users} = props;
   const { selectedUserUid } = useParams();
-  const [showPayment, setShowPayment] = useState(false);
   const { currentUser, handleSelect } = useSelectChat();
   const { users } = useUsersList(currentUser);
   const { text, handleSend, setText } = useSendMessage();
@@ -19,55 +18,67 @@ const ChatComponent = (props) => {
   const { chats, handleSelectChat } = useChats();
   const { messages } = useMessages();
 
-  // useEffect(() => {
-  //   if(users.length && !selectedUser) {
-  //     const activeChatUser = users.find((user) => user.uid === selectedUserUid);
-  //     setSelectedUser(activeChatUser);
-  //   }
-  // },[])
+  useEffect(() => {
+    if (users.length && selectedUserUid) {
+      const activeChatUser = users.find((user) => user?.uid === selectedUserUid);
+      handleSelect(activeChatUser);
+      handleSelectChat(activeChatUser);
+      setSelectedUser(activeChatUser);
+    }
+  }, [selectedUserUid, users]);
 
   return (
     <div>
       <header className="header">
-        <h2 className="title">Զրույց հոգեբանի հետ</h2>
+        <h2 className="title">
+          {currentUser?.role === "psychologist" ?
+            "Զրույց պացիենտի հետ" :
+            "Զրույց հոգեբանի հետ"
+          }
+        </h2>
       </header>
       <div className="chat-users-container" style={{ display: "flex" }}>
         <div className="chat-users">
-          {users?.filter((user) => currentUser?.payments?.[user?.uid]).map((item, index) => {
-            return (
-              <div
-                onClick={() => {
-                  handleSelect(item);
-                  handleSelectChat(item);
-                  setSelectedUser(item);
-                }}
-                className="userCard"
-                style={{ backgroundColor: selectedUserUid === item?.uid ? 'pink' : '' }}
-                key={index}
-              >
-                {item.photoURL ? (
-                  <img className="photo" src={item.photoURL} alt="profile" />
-                ) : (
-                  <div className="name">
-                    <span>{item.displayName[0].toUpperCase()}</span>
+          {users
+            ?.filter((user) => currentUser?.payments?.[user?.uid] || (currentUser.role === "psychologist" && user.uid === selectedUserUid))
+            .map((item, index) => {
+              return (
+                <div
+                  onClick={() => {
+                    handleSelect(item);
+                    handleSelectChat(item);
+                    setSelectedUser(item);
+                  }}
+                  className="userCard"
+                  style={{
+                    backgroundColor:
+                      selectedUser?.uid === item?.uid ? "pink" : "",
+                  }}
+                  key={index}
+                >
+                  {item.photoURL ? (
+                    <img className="photo" src={item.photoURL} alt="profile" />
+                  ) : (
+                    <div className="name">
+                      <span>{item?.displayName?.[0]?.toUpperCase()}</span>
+                    </div>
+                  )}
+                  <div>
+                    <span>{item.displayName}</span>
                   </div>
-                )}
-                <div>
-                  <span>{item.displayName}</span>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
         </div>
         <div id="chat">
           <ul id="messages">
             {/* {showPayment && currentUser && currentUser?.role !== "psychologist" && <PaymentOptions currentUser={currentUser} selectedUserUid={selectedUser?.uid} />} */}
             {messages.map((message, index) => {
               const messageOwner =
-              message.senderId === currentUser?.uid
-              ? currentUser
-              : selectedUser;
-              console.log('***************         ', messageOwner)
+                message.senderId === currentUser?.uid
+                  ? currentUser
+                  : selectedUser;
+              console.log("***************         ", messageOwner);
               return (
                 <li
                   key={index}
@@ -78,8 +89,8 @@ const ChatComponent = (props) => {
                     padding: "4px 8px",
                     borderRadius: "10px",
                     backgroundColor: `${message?.senderId === currentUser?.uid
-                      ? "pink"
-                      : "#FFC0CB"
+                        ? "pink"
+                        : "#FFC0CB"
                       }`,
                     margin: "4px",
                   }}
@@ -92,7 +103,7 @@ const ChatComponent = (props) => {
                     />
                   ) : (
                     <div className="name">
-                      <span>{messageOwner.displayName?.[0].toUpperCase()}</span>
+                      <span>{messageOwner?.displayName?.[0]?.toUpperCase()}</span>
                     </div>
                   )}
                   <div className="message-header">
@@ -106,7 +117,7 @@ const ChatComponent = (props) => {
               );
             })}
           </ul>
-          {selectedUser && (!showPayment || currentUser?.role === "psychologist") && (
+          {selectedUser && (
             <div id="message-form-container">
               <input
                 id="message-input"
@@ -123,7 +134,6 @@ const ChatComponent = (props) => {
             </div>
           )}
         </div>
-
       </div>
     </div>
   );

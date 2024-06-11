@@ -44,6 +44,7 @@ const SignUp = () => {
           placeholder="Name"
           disabled={loading}
           style={{ margin: "5px 0" }}
+          required="required"
         />
         <input
           type="surname"
@@ -52,6 +53,7 @@ const SignUp = () => {
           placeholder="Surname"
           disabled={loading}
           style={{ margin: "5px 0" }}
+          required="required"
         />
         <input
           type="file"
@@ -67,6 +69,7 @@ const SignUp = () => {
           disabled={loading}
           accept="image/*"
           style={{ margin: "5px 0", height: "45px" }}
+          required="required"
         />
 
         <label for="user-roles" className="user-roles-select-label">
@@ -77,6 +80,7 @@ const SignUp = () => {
           id="user-roles"
           className="user-roles-select"
           onChange={(e) => setRole(e.target.value)}
+          required="required"
         >
           <option value="member" selected="selected">
             Օգտատեր
@@ -114,6 +118,7 @@ const SignUp = () => {
           cols="50"
           style={{ width: "350px", margin: "5px 0"}}
           onChange={(e) => setDescription(e.target.value)}
+          required="required"
         />
         <input
           type="email"
@@ -122,6 +127,7 @@ const SignUp = () => {
           placeholder="Email"
           disabled={loading}
           style={{ margin: "5px 0" }}
+          required="required"
         />
         <input
           type={showPassword ? "text" : "password"}
@@ -129,6 +135,7 @@ const SignUp = () => {
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
           disabled={loading}
+          required="required"
         />
         <div className="show-password-container">
           <input

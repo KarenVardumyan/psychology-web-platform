@@ -26,6 +26,14 @@ import useUsersList from "hooks/useUsersList";
 import useSelectChat from "hooks/useSelectChat";
 import noImage from "assets/img/no-Image-Placeholder.svg.png";
 import CommentsDialog from "./Comments";
+import { useEffect } from "react";
+
+const usersCategories = {
+  "Ընդհանուր": "commonPsychologist",
+  "Զինվորական": "soldersPsychologist",
+  "Մանկական" : "childPsychologist",
+  "Ընտանեկան": "familyPsychologist"
+};
 
 function Psychologists() {
   const navigate = useNavigate();
@@ -35,11 +43,7 @@ function Psychologists() {
   const { users, updateUser } = useUsersList(currentUser);
 
   const [selectedCategory, setSelectedCategory] = useState('');
-
-  const handleChange = (event) => {
-    setSelectedCategory(event.target.value);
-  };
-
+  const [filteredUsers, setFilteredUsers] = useState();
   const handleClickOpen = (userData) => {
     setOpenCommentsDialog(true);
     setSelectedUserData(userData);
@@ -60,6 +64,21 @@ function Psychologists() {
       navigate(`/payment/${userInfo.uid}`);
     }
   };
+
+  const handleFilter = (event) => {
+    const { value } = event.target;
+    if(value && filteredUsers) {
+      const filteredData = [...users]?.filter((user) => user.category === usersCategories[value]);
+      setSelectedCategory(value);
+      setFilteredUsers(filteredData);
+    }
+  };
+
+  useEffect(() => {
+    if(users) {
+      setFilteredUsers([...users])
+    }
+  },[users])
 
   return (
     <Grid
@@ -96,30 +115,27 @@ function Psychologists() {
           </h2>
         )}
       </Grid>
-      {currentUser && currentUser?.role !== "psychologist" &&(
-        <Grid container xs={12} sx={{ padding: "0 54px"}}>
+      {currentUser && currentUser?.role !== "psychologist"  && filteredUsers && (
+        <Grid container xs={12} sx={{ padding: "0 54px" }}>
           <FormControl variant="filled" sx={{ m: 1, minWidth: 120, width: "200px" }}>
             <InputLabel id="demo-simple-select-filled-label">Ֆիլտր ըստ կատեգօրիաների</InputLabel>
             <Select
               labelId="demo-simple-select-filled-label"
               id="demo-simple-select-filled"
               value={selectedCategory}
-              onChange={handleChange}
+              onChange={handleFilter}
             >
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              <MenuItem value={"commonPsychologist"}>Ընդհանուր</MenuItem>
-              <MenuItem value={"soldersPsychologist"}>Զինվորական</MenuItem>
-              <MenuItem value={"childPsychologist"}>Մանկական</MenuItem>
-              <MenuItem value={"familyPsychologist"}>Ընտանեկան</MenuItem>
+              <MenuItem value="Ընդհանուր" sx={{width: "inherit"}}>Ընդհանուր</MenuItem>
+              <MenuItem value="Զինվորական" sx={{width: "inherit"}}>Զինվորական</MenuItem>
+              <MenuItem value="Մանկական" sx={{width: "inherit"}}>Մանկական</MenuItem>
+              <MenuItem value="Ընտանեկան" sx={{width: "inherit"}}>Ընտանեկան</MenuItem>
             </Select>
           </FormControl>
         </Grid>
       )}
-      {currentUser && users ? (
+      {currentUser && filteredUsers ? (
         <Grid container direction="row" spacing={2} padding={8}>
-          {users.map((userInfo) => {
+          {filteredUsers?.map((userInfo) => {
             const {
               displayName,
               surname,
@@ -257,7 +273,7 @@ function Psychologists() {
         </Grid>
       ) : (
         <Grid container direction="row" spacing={2} padding={8}>
-          {!Boolean(users.length) &&
+          {!Boolean(filteredUsers?.length) &&
             Array(6)
               .fill()
               .map((index) => {

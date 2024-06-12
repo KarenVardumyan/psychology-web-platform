@@ -10,74 +10,44 @@ import mot7 from 'assets/img/mot7.jpg';
 import mot8 from 'assets/img/mot8.jpg';
 import mot9 from 'assets/img/mot9.jpg';
 
+import React from 'react';
+import { Slide } from 'react-slideshow-image';
+import 'react-slideshow-image/dist/styles.css'
+
+const slideImages = [
+  { url: mot1 },
+  { url: mot2 },
+  { url: mot3 },
+  { url: mot4 },
+  { url: mot5 },
+  { url: mot6 },
+  { url: mot7 },
+  { url: mot8 },
+  { url: mot9 },
+]
+
+const Slideshow = () => {
+  return (
+    <div className="slide-container">
+      <Slide transitionDuration={500}>
+        {slideImages.map((slideImage, index) => (
+            <img src={slideImage.url} className="d-block w-100" alt="Image 9" />
+        ))}
+      </Slide>
+    </div>
+  )
+}
 
 function Pictures() {
-
   return (
     <div id="pictures" className="carousel slide" data-ride="carousel">
       <h2>Նկարներ</h2>
-      <div className="carousel-inner">
-        {/* Image 1 */}
-        <div className="carousel-item active">
-          <img src={mot1} className="d-block w-100" alt="Image 1" />
-        </div>
-
-        {/* Image 2 */}
-        <div className="carousel-item">
-          <img src={mot2} className="d-block w-100" alt="Image 2" />
-        </div>
-
-        {/* Image 3 */}
-        <div className="carousel-item">
-          <img src={mot3} className="d-block w-100" alt="Image 3" />
-        </div>
-
-        {/* Image 4 */}
-        <div className="carousel-item">
-          <img src={mot4} className="d-block w-100" alt="Image 4" />
-        </div>
-
-        {/* Image 5 */}
-        <div className="carousel-item">
-          <img src={mot5} className="d-block w-100" alt="Image 5" />
-        </div>
-
-        {/* Image 6 */}
-        <div className="carousel-item">
-          <img src={mot6} className="d-block w-100" alt="Image 6" />
-        </div>
-
-        {/* Image 7 */}
-        <div className="carousel-item">
-          <img src={mot7} className="d-block w-100" alt="Image 7" />
-        </div>
-
-        {/* Image 8 */}
-        <div className="carousel-item">
-          <img src={mot8} className="d-block w-100" alt="Image 8" />
-        </div>
-
-        {/* Image 9 */}
-        <div className="carousel-item">
-          <img src={mot9} className="d-block w-100" alt="Image 9" />
-        </div>
-      </div>
-
-      {/* Previous and Next buttons */}
-      <a className="carousel-control-prev" href="#nkarner" role="button" data-slide="prev">
-        <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span className="sr-only">Previous</span>
-      </a>
-      <a className="carousel-control-next" href="#nkarner" role="button" data-slide="next">
-        <span className="carousel-control-next-icon" aria-hidden="true"></span>
-        <span className="sr-only">Next</span>
-      </a>
+      <Slideshow />
       <button className="butt">
         <Link to="/motivation">Վերադառնալ</Link>
       </button>
     </div>
   );
-
 };
 
 export default Pictures;

@@ -29,10 +29,17 @@ import CommentsDialog from "./Comments";
 import { useEffect } from "react";
 
 const usersCategories = {
+  "commonPsychologist": "Ընդհանուր",
+  "soldersPsychologist": "Զինվորական",
+  "childPsychologist": "Մանկական",
+  "familyPsychologist": "Ընտանեկան"
+};
+
+const usersCategoriesValues = {
   "Ընդհանուր": "commonPsychologist",
   "Զինվորական": "soldersPsychologist",
-  "Մանկական" : "childPsychologist",
-  "Ընտանեկան": "familyPsychologist"
+  "Մանկական": "childPsychologist",
+  "Ընտանեկան": "familyPsychologist",
 };
 
 function Psychologists() {
@@ -64,11 +71,12 @@ function Psychologists() {
       navigate(`/payment/${userInfo.uid}`);
     }
   };
-
+console.log(users)
   const handleFilter = (event) => {
+    console.log(event.target)
     const { value } = event.target;
     if(value && filteredUsers) {
-      const filteredData = [...users]?.filter((user) => user.category === usersCategories[value]);
+      const filteredData = [...users]?.filter((user) => user.category === usersCategoriesValues[value]);
       setSelectedCategory(value);
       setFilteredUsers(filteredData);
     }
@@ -175,7 +183,7 @@ function Psychologists() {
                     </Typography>
                     {userInfo?.role === "psychologist" && (
                       <Typography variant="subtitle1" minHeight={20}>
-                        կատեգորիա: {category}
+                        կատեգորիա: {usersCategories[category]}
                       </Typography>
                     )}
                     <Typography

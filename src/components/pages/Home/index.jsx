@@ -21,15 +21,19 @@ import { auth } from "config/firebase";
 import useAuth from "hooks/useAuth";
 import { IconButton } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/Logout';
+import 'react-slideshow-image/dist/styles.css';
+import useUsersList from 'hooks/useUsersList';
+import { useMemo } from 'react';
 
 const handleSignOut = () => {
   auth
-  .signOut()
-  .then(() => console.log('User signed out!'));
+    .signOut()
+    .then(() => console.log('User signed out!'));
 }
 
 function Home() {
   const { user: currentUser, loading } = useAuth();
+  const { users } = useUsersList(currentUser);
 
   return (
     <body>
@@ -52,8 +56,8 @@ function Home() {
             <img src={whatsapp} alt="WhatsApp Logo"></img>
           </div>
           <div className="logout-icon" >
-            <IconButton onClick={handleSignOut} sx={{height: "30px", width: "30px", "&:focus": { outline: "unset" }}}>
-              <LogoutIcon  sx={{ height: "30px", width: "30px", color: "rgb(253, 180, 192)" }}/>
+            <IconButton onClick={handleSignOut} sx={{ height: "30px", width: "30px", "&:focus": { outline: "unset" } }}>
+              <LogoutIcon sx={{ height: "30px", width: "30px", color: "rgb(253, 180, 192)" }} />
             </IconButton>
           </div>
         </div>
@@ -95,7 +99,7 @@ function Home() {
             <div className="about-content">
               <p>Բարի գալուստ CalmMind, որտեղ սկսվում է ներքին խաղաղության և անձնական աճի ուղին ...</p>
               <button className="about-content-see-more">
-              <Link to='/about-as' className="about-content-see-more" >Իմանալ ավելին</Link>
+                <Link to='/about-as' className="about-content-see-more" >Իմանալ ավելին</Link>
               </button>
             </div>
           </div>
@@ -143,71 +147,18 @@ function Home() {
             <div className="container">
               <h2 className="text-center my-4" style={{ color: 'white' }}>Մեր հոգեբանները</h2>
               <div id="doctorCarousel" className="carousel slide" data-ride="carousel">
+
                 <div className="carousel-inner">
-                  {/* <!-- Doctor 1 --> */}
-                  <div className="carousel-item active">
-                    <img src={psy1} className="doctor-img" alt="Doctor 1" />
-                    <div className="carousel-caption">
-                      <h3 style={{ color: 'darkgray' }}> Սոնա Սարգսյան </h3>
-                      {/* <!-- <p style="color: darkgray; ">Profession: General Practitioner</p> --> */}
-                      <p style={{ color: 'darkgray' }}>Հեռ: 123-456-7890</p>
-                    </div>
-                  </div>
-                  {/* <!-- Doctor 2 --> */}
-                  <div className="carousel-item">
-                    <img src={psy2} className="doctor-img" alt="Doctor 2" />
-                    <div className="carousel-caption">
-                      <h3 style={{ color: 'darkgray' }}>Դավիթ Պողոսյան</h3>
-                      {/* <!-- <p style="color: darkgray; ">Profession: Cardiologist</p> --> */}
-                      <p style={{ color: 'darkgray' }}>Հեռ: 987-654-3210</p>
-                    </div>
-                  </div>
-                  {/* <!-- Add more doctors as needed --> */}
-                  <div className="carousel-item">
-                    <img src={psy3} className="doctor-img" alt="Doctor 2" />
-                    <div className="carousel-caption">
-                      <h3 style={{ color: 'darkgray' }}>Հասմիկ Կարապետյան</h3>
-                      {/* <!-- <p style="color: darkgray; ">Profession: Cardiologist</p> --> */}
-                      <p style={{ color: 'darkgray' }}>Հեռ: 327-654-3210</p>
-                    </div>
-                  </div>
-
-                  <div className="carousel-item">
-                    <img src={psy4} className="doctor-img" alt="Doctor 2" />
-                    <div className="carousel-caption">
-                      <h3 style={{ color: 'darkgray' }}>Համլետ Հարությունյան</h3>
-                      {/* <!-- <p style="color: darkgray; ">Profession: Cardiologist</p> --> */}
-                      <p style={{ color: 'darkgray' }}>Հեռ: 874-654-3210</p>
-                    </div>
-                  </div>
-
-                  <div className="carousel-item">
-                    <img src={psy5} className="doctor-img" alt="Doctor 2" />
-                    <div className="carousel-caption">
-                      <h3 style={{ color: 'darkgray' }}>Մոնթե Գալստյան</h3>
-                      {/* <!-- <p style="color: darkgray; ">Profession: Cardiologist</p> --> */}
-                      <p style={{ color: 'darkgray' }}>Հեռ: 963-654-3210</p>
-                    </div>
-                  </div>
-
-                  <div className="carousel-item">
-                    <img src={psy6} className="doctor-img" alt="Doctor 2" />
-                    <div className="carousel-caption">
-                      <h3 style={{ color: 'darkgray' }}>Միլենա Դանիելյան</h3>
-                      {/* <!-- <p>Profession: Cardiologist</p> --> */}
-                      <p style={{ color: 'darkgray' }}>Հեռ: 321-654-3210</p>
-                    </div>
-                  </div>
-
-                  <div className="carousel-item">
-                    <img src={psy7} className="doctor-img" alt="Doctor 2" />
-                    <div className="carousel-caption">
-                      <h3 style={{ color: 'darkgray' }}>Ռուզաննա Մարիկյան</h3>
-                      {/* <!-- <p style="color: darkgray; ">Profession: Cardiologist</p> --> */}
-                      <p style={{ color: 'darkgray' }}>Հեռ: 987-654-3210</p>
-                    </div>
-                  </div>
-
+                  {users.map((user, index) => {
+                    return (<div key={user.uid} className={`carousel-item ${index === 0 && 'active'}`}>
+                      <img src={user.photoURL || "https://images.squarespace-cdn.com/content/v1/54b7b93ce4b0a3e130d5d232/1519987020970-8IQ7F6Z61LLBCX85A65S/icon.png?format=750w"} className="doctor-img" alt="Doctor 1" />
+                      <div className="carousel-caption">
+                        <h3 style={{ color: 'darkgray' }}> {user.displayName} {user.surname}</h3>
+                        {/* <!-- <p style="color: darkgray; ">Profession: General Practitioner</p> --> */}
+                        {/* <p style={{ color: 'darkgray' }}>Հեռ: 123-456-7890</p> */}
+                      </div>
+                    </div>)
+                  })}
 
                 </div>
                 <a className="carousel-control-prev" href="#doctorCarousel" role="button" data-slide="prev">

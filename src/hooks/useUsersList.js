@@ -9,8 +9,17 @@ import {
 } from "firebase/firestore";
 import { db } from "config/firebase";
 
+const categories = {
+  commonPsychologist: "Ընդհանուր",
+  soldersPsychologist: "Զինվորական",
+  childPsychologist: "Մանկական",
+  familyPsychologist: "Ընտանեկան",
+}
+
 const useUsersList = (currentUser) => {
   const [users, setUsers] = useState([]);
+  const [filteredUsers, setFilteredUsers] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('');
   const [err, setErr] = useState(false);
 
   useEffect(() => {
@@ -31,6 +40,14 @@ const useUsersList = (currentUser) => {
     }
   }, [currentUser]);
 
+  useEffect(() => {
+    if (selectedCategory) {
+      const filteredUsers = users.filter(user => user.category === selectedCategory);
+      setFilteredUsers(filteredUsers)
+    }
+    else { setFilteredUsers([]) }
+  }, [selectedCategory]);
+
   const updateUser = async (id, updates) => {
     if (!id) return;
     const userDocRef = doc(db, "users", id);
@@ -43,7 +60,12 @@ const useUsersList = (currentUser) => {
   };
 
   return {
-    users,
+    users: selectedCategory ? filteredUsers : users,
+    selectedCategory,
+    filteredUsers,
+    categories,
+    setFilteredUsers,
+    setSelectedCategory,
     updateUser,
   };
 };

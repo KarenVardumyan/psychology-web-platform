@@ -13,14 +13,8 @@ const useSignUp = () => {
   const [surname, setSurname] = useState("");
   const [role, setRole] = useState("member");
   const [photo, setPhoto] = useState(null);
-  const [category, setCategory] = useState(role === "psychologist" ? "commonPsychologist" : "");
+  const [category, setCategory] = useState("commonPsychologist");
   const [description, setDescription] = useState("");
-
-  // const [userData, setUserData] = useState({
-  //   role,
-  //   displayName: name,
-  //   surname
-  // });
 
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -33,17 +27,17 @@ const useSignUp = () => {
     try {
       const res = await createUserWithEmailAndPassword(auth, email, password);
       let photoFromStorage = "";
-      if(photo) {
+      if (photo) {
         photoFromStorage = await mediaUploader(photo.file, `users/${res.user.uid}/profilePhoto`);
       }
-      await createUserDocumentFromAuth(res.user, {
+      const userData = {
         role,
         displayName: name,
         surname,
         photoURL: photoFromStorage,
-        category,
         description
-      });
+      };
+      role === "psychologist" ? await createUserDocumentFromAuth(res.user, { ...userData, category }) : await createUserDocumentFromAuth(res.user, userData);
       await setDoc(doc(db, "userChats", res.user.uid), {});
       navigate("/home");
     } catch (err) {

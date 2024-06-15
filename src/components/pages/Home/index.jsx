@@ -34,7 +34,7 @@ const handleSignOut = () => {
 function Home() {
   const { user: currentUser, loading } = useAuth();
   const { users } = useUsersList(currentUser);
-
+  console.log('************************           ',users)
   return (
     <body>
       <header className="topheader">
@@ -149,7 +149,7 @@ function Home() {
               <div id="doctorCarousel" className="carousel slide" data-ride="carousel">
 
                 <div className="carousel-inner">
-                  {users.map((user, index) => {
+                  {users.filter((u)=>u?.role === 'psychologist')?.map((user, index) => {
                     return (<div key={user.uid} className={`carousel-item ${index === 0 && 'active'}`}>
                       <img src={user.photoURL || "https://images.squarespace-cdn.com/content/v1/54b7b93ce4b0a3e130d5d232/1519987020970-8IQ7F6Z61LLBCX85A65S/icon.png?format=750w"} className="doctor-img" alt="Doctor 1" />
                       <div className="carousel-caption">

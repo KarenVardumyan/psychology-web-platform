@@ -33,8 +33,8 @@ const handleSignOut = () => {
 
 function Home() {
   const { user: currentUser, loading } = useAuth();
-  const { users } = useUsersList(currentUser);
-  console.log('************************           ',users)
+  const { users } = useUsersList(currentUser, true);
+  console.log('************************           ', users)
   return (
     <body>
       <header className="topheader">
@@ -143,13 +143,13 @@ function Home() {
 
 
           {/* <!-- doctors --> */}
-          <div id="ourDoctors">
+          {!!users.length && <div id="ourDoctors">
             <div className="container">
               <h2 className="text-center my-4" style={{ color: 'white' }}>Մեր հոգեբանները</h2>
               <div id="doctorCarousel" className="carousel slide" data-ride="carousel">
 
                 <div className="carousel-inner">
-                  {users.filter((u)=>u?.role === 'psychologist')?.map((user, index) => {
+                  {users.filter((u) => u?.role === 'psychologist')?.map((user, index) => {
                     return (<div key={user.uid} className={`carousel-item ${index === 0 && 'active'}`}>
                       <img src={user.photoURL || "https://images.squarespace-cdn.com/content/v1/54b7b93ce4b0a3e130d5d232/1519987020970-8IQ7F6Z61LLBCX85A65S/icon.png?format=750w"} className="doctor-img" alt="Doctor 1" />
                       <div className="carousel-caption">
@@ -171,7 +171,7 @@ function Home() {
                 </a>
               </div>
             </div>
-          </div>
+          </div>}
 
           {/* <!-- service --> */}
 

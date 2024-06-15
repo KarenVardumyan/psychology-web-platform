@@ -16,7 +16,7 @@ const categories = {
   familyPsychologist: "Ընտանեկան",
 }
 
-const useUsersList = (currentUser) => {
+const useUsersList = (currentUser, isMainPage) => {
   const [users, setUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
@@ -24,7 +24,7 @@ const useUsersList = (currentUser) => {
 
   useEffect(() => {
     if (currentUser) {
-      const CONDITION = currentUser.role === "psychologist" ? "!=" : "==";
+      const CONDITION = currentUser.role !== "psychologist" || isMainPage ? "==" : "!=";
       const q = query(
         collection(db, "users"),
         where("role", CONDITION, "psychologist")
